@@ -96,16 +96,16 @@
             padding: 10px;
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 6px;
         }
 
         .chat-message {
             padding: 10px 12px;
             border-radius: 8px;
             border-left: 4px solid;
-            font-size: 13px;
+            font-size: 12px;
             word-wrap: break-word;
-            animation: slideIn 0.4s ease;
+            animation: slideIn 0.3s ease;
             line-height: 1.4;
             font-weight: 600;
         }
@@ -116,9 +116,9 @@
         }
 
         .message-time {
-            font-size: 11px;
+            font-size: 10px;
             opacity: 0.8;
-            margin-bottom: 3px;
+            margin-bottom: 2px;
         }
 
         .allah-message {
@@ -366,7 +366,7 @@
             <div class="team-stats">
                 <div class="stat-line">
                     <span>Askerler:</span>
-                    <span class="stat-value" id="allahCount">10</span>
+                    <span class="stat-value" id="allahCount">100</span>
                 </div>
                 <div class="stat-line">
                     <span>Güç:</span>
@@ -388,9 +388,9 @@
             </div>
             <canvas id="battlefieldCanvas"></canvas>
             <div class="battle-info">
-                <div>🔵 Allah: <span id="infoAllah">10</span></div>
+                <div>🔵 Allah: <span id="infoAllah">100</span></div>
                 <div id="totalKilled">💀 Toplam Öldü: 0</div>
-                <div>🔴 Emir: <span id="infoEmir">10</span></div>
+                <div>🔴 Emir: <span id="infoEmir">100</span></div>
             </div>
             <div class="battle-controls">
                 <button class="control-btn" onclick="battle.togglePause()">⏸️ DURAKLAT</button>
@@ -403,7 +403,7 @@
             <div class="team-stats">
                 <div class="stat-line">
                     <span>Askerler:</span>
-                    <span class="stat-value" id="emirCount">10</span>
+                    <span class="stat-value" id="emirCount">100</span>
                 </div>
                 <div class="stat-line">
                     <span>Güç:</span>
@@ -444,10 +444,10 @@
         }, 1000);
 
         const battle = {
-            allahSoldiers: 10,
-            emirSoldiers: 10,
-            allahMaxSoldiers: 10,
-            emirMaxSoldiers: 10,
+            allahSoldiers: 100,
+            emirSoldiers: 100,
+            allahMaxSoldiers: 100,
+            emirMaxSoldiers: 100,
             totalKilled: 0,
             paused: false,
             gameOver: false,
@@ -457,120 +457,135 @@
             emirUnits: [],
             explosions: [],
 
-            // EXTREME DARK MIZAH CÜMLELERİ
+            // EXTREME DARK MIZAH - SEX, TANRISAL GÜÇ VB
             allahMesajlar: [
-                "Allah: Emir'e 'tanrısal seks' yaptırırım! 🌪️",
-                "Allah askeri: 'Emir'in anus'u nerede? Torpil atacağım!' 💣",
-                "Allah: Emir'i göt'ten yakıt kullanacağım!",
-                "Allah ordusunun şefi: 'Emir'i cıvata gibi vidalayacağız!' 🔩",
-                "Allah: Emir'in ruhuna sahip oldum, iç boşluğu satarım! 👿",
-                "Allah askerleri: 'Emir'in beynini duvara çizmişim!' 🧠",
-                "Allah: Emir'i çitlerin sıkıştırıp sıvılaştırdım!",
-                "Allah: Emir'i çaydanlık gibi başından pişirdim! ☕",
-                "Allah ordusunun biri: 'Emir'in midesi konserve takvimi mi?'",
-                "Allah: Emir'in açık hava müzesi haline getirdim!",
-                "Allah: Emir'i 3D printer'a soktum, plastik çıktı!",
-                "Allah askeri: 'Emir'in kemikleri toz halini aldı mı?'",
-                "Allah: Emir'i hamburger eti yapmaya başladım! 🍔",
-                "Allah: Emir'in insan olmaktan çıktı, yoğun madde oldu!",
-                "Allah: Emir'i sosyal medyada yasaklıyorum! 🔞",
-                "Allah: Emir'in resimleri deepfake'e dönüştürdüm!",
-                "Allah: Emir'i yüksek frekans'a çevirip dilim ettim!",
-                "Allah ordusunun kameraman: 'Emir'i pornoya döndü mü?'",
-                "Allah: Emir'in ciğerlerini sünger yapmışım!",
-                "Allah: Emir ve kanını dönerci'ye verdim! 🌮",
+                "Allah: Emir'i tanrısal gücümle sikeceğim! 🌪️",
+                "Allah: Emir'in anüsü mübarek yere kütür! 💥",
+                "Allah: Sex budur, Emir'i yok ediyorum!",
+                "Allah askeri: 'Emir'i diri diri sikiş!",
+                "Allah: Tanrısal penis ile Emir'i delip geçeceğim!",
+                "Allah: Emir'in götü cenaze mübarek!",
+                "Allah: Seks yaparken Emir öldü! HAHAHAHA",
+                "Allah: Emir'e tanrısal felç vurduk!",
+                "Allah: Emir'in 18 deliğine 18 mermi!",
+                "Allah: Sikiş ile başlayıp savaş ile bitirdik!",
+                "Allah ordusunun biri: 'Emir'i sikip öldürdük!'",
+                "Allah: Tanrısal spermim Emir'i eritip gitti!",
+                "Allah: Emir'e tanrısal ırz tacizi yaptım!",
+                "Allah: Seks tanrısal, Emir'i sex etti!",
+                "Allah: Emir'i tanrısal penisin üstüne oturttum!",
+                "Allah: Kıyafetlerini yırtıp tanrısal sikerim!",
+                "Allah: Emir'in vajinası cehenneme gitti!",
+                "Allah: Tanrısal penis Emir'i paramparça etti!",
+                "Allah: Emir'i sex oyuncağı yaptım, hala sikiyorum!",
+                "Allah: Emir artık boşolmuş, ölü hale gelmiş!",
+                "Allah: Tanrısal gücümle Emir'i çırtlattım!",
+                "Allah: Emir'in idrar yoluna işıldıyorum!",
+                "Allah: Seks esnasında Emir'in kalbini kırdım!",
+                "Allah: Tanrısal jaculasyonda Emir cansız kaldı!",
+                "Allah: Emir'e tanrısal anal yapıp öldürdüm!",
             ],
 
             emirMesajlar: [
-                "Emir: Allah'ı tanrısal seks'ten öldürüyorum! 🌪️",
-                "Emir askeri: 'Allah'ın anus'u nerede? Torpil atacağım!' 💣",
-                "Emir: Allah'ı göt'ten yakıt kullanacağım!",
-                "Emir ordusunun şefi: 'Allah'ı cıvata gibi vidalayacağız!' 🔩",
-                "Emir: Allah'ın ruhuna sahip oldum, iç boşluğu satarım! 👿",
-                "Emir askerleri: 'Allah'ın beynini duvara çizmişim!' 🧠",
-                "Emir: Allah'ı çitlerin sıkıştırıp sıvılaştırdım!",
-                "Emir: Allah'ı çaydanlık gibi başından pişirdim! ☕",
-                "Emir ordusunun biri: 'Allah'ın midesi konserve takvimi mi?'",
-                "Emir: Allah'ı açık hava müzesi haline getirdim!",
-                "Emir: Allah'ı 3D printer'a soktum, plastik çıktı!",
-                "Emir askeri: 'Allah'ın kemikleri toz halini aldı mı?'",
-                "Emir: Allah'ı hamburger eti yapmaya başladım! 🍔",
-                "Emir: Allah'ın insan olmaktan çıktı, yoğun madde oldu!",
-                "Emir: Allah'ı sosyal medyada yasaklıyorum! 🔞",
-                "Emir: Allah'ın resimleri deepfake'e dönüştürdüm!",
-                "Emir: Allah'ı yüksek frekans'a çevirip dilim ettim!",
-                "Emir ordusunun kameraman: 'Allah'ı pornoya döndü mü?'",
-                "Emir: Allah'ın ciğerlerini sünger yapmışım!",
-                "Emir: Allah ve kanını dönerci'ye verdim! 🌮",
+                "Emir: Allah'ı tanrısal gücümle sikeceğim! 🌪️",
+                "Emir: Allah'ın anüsü mübarek yere kütür! 💥",
+                "Emir: Sex budur, Allah'ı yok ediyorum!",
+                "Emir askeri: 'Allah'ı diri diri sikiş!",
+                "Emir: Tanrısal penis ile Allah'ı delip geçeceğim!",
+                "Emir: Allah'ın götü cenaze mübarek!",
+                "Emir: Seks yaparken Allah öldü! HAHAHAHA",
+                "Emir: Allah'a tanrısal felç vurduk!",
+                "Emir: Allah'ın 18 deliğine 18 mermi!",
+                "Emir: Sikiş ile başlayıp savaş ile bitirdik!",
+                "Emir ordusunun biri: 'Allah'ı sikip öldürdük!'",
+                "Emir: Tanrısal spermim Allah'ı eritip gitti!",
+                "Emir: Allah'a tanrısal ırz tacizi yaptım!",
+                "Emir: Seks tanrısal, Allah'ı sex etti!",
+                "Emir: Allah'ı tanrısal penisin üstüne oturttum!",
+                "Emir: Kıyafetlerini yırtıp tanrısal sikerim!",
+                "Emir: Allah'ın vajinası cehenneme gitti!",
+                "Emir: Tanrısal penis Allah'ı paramparça etti!",
+                "Emir: Allah'ı sex oyuncağı yaptım, hala sikiyorum!",
+                "Emir: Allah artık boşolmuş, ölü hale gelmiş!",
+                "Emir: Tanrısal gücümle Allah'ı çırtlattım!",
+                "Emir: Allah'ın idrar yoluna işıldıyorum!",
+                "Emir: Seks esnasında Allah'ın kalbini kırdım!",
+                "Emir: Tanrısal jaculasyonda Allah cansız kaldı!",
+                "Emir: Allah'a tanrısal anal yapıp öldürdüm!",
             ],
 
             nötrMesajlar: [
-                "💥 BOOOOOM! Emir Allah'a çaktı! PATLAMASI YÖK ETTİ!",
-                "🔞 Allah ve Emir '18+ İçerik' oldu!",
-                "💀 Kemikler jeofizik harita'ya dönüştü!",
-                "🧬 DNA'lar 'Spaghetti bolognese' oldu!",
-                "🍽️ Kasapların 'et stoğu' doldu!",
-                "🌊 Kan gölü denize dönüştü!",
-                "🔥 İnsan komposu değil, MEGA ATOMİK BOMBAN sonucu!",
-                "👻 Ruhları paranormal takım çağırdı!",
-                "🧟 Zombi yapım fabrikası açık mi?",
-                "🎬 Hollywood bunu film yapamaz!",
-                "⚫ Kara delik oluştu, gökbilimciler frenik oldu!",
-                "🔬 Biyoloji ders kitaplarına dahil ettiler!",
-                "🧠 Nöroloji: 'Bu ne içiye mi gitti?'",
-                "🏥 Tıp fakültesi kapandı, hiçbir alet yeterli değil!",
-                "⚰️ Cenaze kültürü değişti!",
-                "🌍 Coğrafya haritası yeniden çizildi!",
-                "🎨 Soyut sanat bunu taklit edemez!",
-                "💔 Romantizm: 'Bu savaş değil, gözünü sevme ritüeli!'",
-                "🎪 Sirk: 'Bizi alt ettiler bizim sektörde!'",
-                "🔊 Ses bariyeri kırıldı, şiddet seviyesi MAXIMUM!",
+                "💥 BOOOOOM! Tanrısal penis çarpışması!",
+                "🔞 Sex açıklaması için +18 gerekli!",
+                "💀 Kemikler sperm ile erir gitti!",
+                "🧬 DNA'lar sex tarafından bozuldu!",
+                "🍽️ Kan kasapçısının stoğu doldu!",
+                "🌊 Sperm okyanusa döndü!",
+                "🔥 Tanrısal penis atşı yakıyor!",
+                "👻 Ruhlar sex izledi, şok oldu!",
+                "🧟 Zombi de bu kadar kanlı olmaz!",
+                "🎬 Pornoya bile bu sahne yapıştırılamaz!",
+                "⚫ Kara delik sperm absorbe etti!",
+                "🔬 Bilim: Bu ne ki? Sex mi savaş mı?",
+                "🧠 Nöroloji: Beyin + Sex = Explosion!",
+                "🏥 Hastaneler kendini kapatmış!",
+                "⚰️ Cenaze: Sex ile insan kalır mı?",
+                "🌍 Dünya: Bunu kopyalayamam!",
+                "🎨 Sanat: Sex'in sanatı budur!",
+                "💔 Aşk: Bu da sevişme mi sandılar?",
+                "🎪 Sirk: Daha iyi gösteri bulamaz!",
+                "🔊 Ses: Sex sesleri duyulsun muydu?",
+                "🌪️ Tanrısal gücü görmediniz mi?",
+                "💋 Dudaklar tanrısal öpüştü!",
+                "🍑 Kıçlar tanrısal çarpıştı!",
+                "🍆 Penis tanrısal büyüdü!",
+                "😈 Şeytan bile utandı bu sex'ten!",
             ],
 
             allahKazanMesajlari: [
-                "ALLAH KAZANDI! EMİR'İ TANRISAL SEX'E TABİ TUTTU!",
-                "Allah: Emir'in ruhunu satılık yaptım! 👿",
-                "Allah: Emir'i yoğun madde haline getirdim! ⚫",
-                "Allah: Emir'in beynini İSTANBUL'un tüm duvarına çizmişim!",
-                "Allah: Emir'in kemikleri toz halinde, çiment'e karıştırdım!",
-                "Allah: Emir'i çaydanlık'ta pişirdim, çay tutulmadı! ☕",
-                "Allah: Emir'i pornografi platformlarından yasaklattırdım!",
-                "Allah: Emir'in DNA'sını makarnaya dönüştürdüm! 🍝",
-                "Allah: Emir'i insan olaydan çıkardım, tarihçiler derlemez!",
-                "Allah: Emir'in midesini konserve markası tuttu! 🥫",
-                "Allah: Emir'i 3D printer'a koydum, sadece hava çıktı!",
-                "Allah: Emir'in ciğerlerini sünger'e dönüştürdüm, banyo yapıyorum! 🧽",
-                "Allah: Emir'i hamburger et'ine dönüştürdüm, restoran açtım! 🍔",
-                "Allah: Emir'in ruhuna sahip oldum, HAHAHA!",
-                "Allah: Emir'in bacaklarını cıvata'ya dönüştürdüm! 🔩",
-                "Allah: Emir'i yüksek frekans'a çevirip dilim ettim!",
-                "Allah: Emir'in açılı hava müzesi açılışında konuk!",
-                "Allah: Emir'in kanını dönerci'ye sattım, başarılı olmuş! 🌮",
-                "Allah: Emir'in anus'unu satellit anteni yaptım! 📡",
-                "Allah: Emir'i yeniden doğarmayacak kadar bozdum!",
+                "ALLAH KAZANDI! TANRISAL SEX İLE EMİR'İ ÖLDÜRDÜ!",
+                "Allah: Emir'i tanrısal penis ile sikiş öld��!",
+                "Allah: Tanrısal gücümle Emir'i anal yaptı ölümü!",
+                "Allah: Sex orgaszmı Emir'i paramparça etti!",
+                "Allah: Tanrısal spermim Emir'i eritip gitti!",
+                "Allah: Seks yaparken Emir'in kalbi durdu! ZORT!",
+                "Allah: Tanrısal jaculasyonda Emir cansız!",
+                "Allah: Emir'in vajinası cehennemden geri getirildi!",
+                "Allah: Sex budur, Emir'i bu yolla yok ettim!",
+                "Allah: Tanrısal anüs tacizi Emir'i ölüm kucağına götürdü!",
+                "Allah: Emir'i diri diri sikerek öldüm mü? MUTHIS!",
+                "Allah: Tanrısal penis Emir'i iç deldi!",
+                "Allah: Kıyafet yırtarak siktiğim Emir bu!",
+                "Allah: Sex machine gibi çalışarak Emir'i bitirdim!",
+                "Allah: Emir'e tanrısal ırz tacizi = Ölüm!",
+                "Allah: Penis gücü > Savaş gücü! Emir'i sex etti!",
+                "Allah: Tanrısal 69 pozisyonunda Emir'i boğdum!",
+                "Allah: Emir'in idrar yoluna işerek öldürdüm!",
+                "Allah: Sex sonrası ceset Emir kaldı!",
+                "Allah: Tanrısal orgazmda Emir'in beyin çıktı!",
             ],
 
             emirKazanMesajlari: [
-                "EMİR KAZANDI! ALLAH'I TANRISAL SEX'E TABİ TUTTU!",
-                "Emir: Allah'ın ruhunu satılık yaptım! 👿",
-                "Emir: Allah'ı yoğun madde haline getirdim! ⚫",
-                "Emir: Allah'ın beynini İSTANBUL'un tüm duvarına çizmişim!",
-                "Emir: Allah'ın kemikleri toz halinde, çiment'e karıştırdım!",
-                "Emir: Allah'ı çaydanlık'ta pişirdim, çay tutulmadı! ☕",
-                "Emir: Allah'ı pornografi platformlarından yasaklattırdım!",
-                "Emir: Allah'ın DNA'sını makarnaya dönüştürdüm! 🍝",
-                "Emir: Allah'ı insan olaydan çıkardım, tarihçiler derlemez!",
-                "Emir: Allah'ın midesini konserve markası tuttu! 🥫",
-                "Emir: Allah'ı 3D printer'a koydum, sadece hava çıktı!",
-                "Emir: Allah'ın ciğerlerini sünger'e dönüştürdüm, banyo yapıyorum! 🧽",
-                "Emir: Allah'ı hamburger et'ine dönüştürdüm, restoran açtım! 🍔",
-                "Emir: Allah'ın ruhuna sahip oldum, HAHAHA!",
-                "Emir: Allah'ın bacaklarını cıvata'ya dönüştürdüm! 🔩",
-                "Emir: Allah'ı yüksek frekans'a çevirip dilim ettim!",
-                "Emir: Allah'ın açılı hava müzesi açılışında konuk!",
-                "Emir: Allah'ın kanını dönerci'ye sattım, başarılı olmuş! 🌮",
-                "Emir: Allah'ın anus'unu satellit anteni yaptım! 📡",
-                "Emir: Allah'ı yeniden doğarmayacak kadar bozdum!",
+                "EMİR KAZANDI! TANRISAL SEX İLE ALLAH'I ÖLDÜRDÜ!",
+                "Emir: Allah'ı tanrısal penis ile sikiş öldü!",
+                "Emir: Tanrısal gücümle Allah'ı anal yaptı ölümü!",
+                "Emir: Sex orgaszmı Allah'ı paramparça etti!",
+                "Emir: Tanrısal spermim Allah'ı eritip gitti!",
+                "Emir: Seks yaparken Allah'ın kalbi durdu! ZORT!",
+                "Emir: Tanrısal jaculasyonda Allah cansız!",
+                "Emir: Allah'ın vajinası cehennemden geri getirildi!",
+                "Emir: Sex budur, Allah'ı bu yolla yok ettim!",
+                "Emir: Tanrısal anüs tacizi Allah'ı ölüm kucağına götürdü!",
+                "Emir: Allah'ı diri diri sikerek öldüm mü? MUTHIS!",
+                "Emir: Tanrısal penis Allah'ı iç deldi!",
+                "Emir: Kıyafet yırtarak siktiğim Allah bu!",
+                "Emir: Sex machine gibi çalışarak Allah'ı bitirdim!",
+                "Emir: Allah'a tanrısal ırz tacizi = Ölüm!",
+                "Emir: Penis gücü > Savaş gücü! Allah'ı sex etti!",
+                "Emir: Tanrısal 69 pozisyonunda Allah'ı boğdum!",
+                "Emir: Allah'ın idrar yoluna işerek öldürdüm!",
+                "Emir: Sex sonrası ceset Allah kaldı!",
+                "Emir: Tanrısal orgazmda Allah'ın beyin çıktı!",
             ],
 
             init() {
@@ -588,7 +603,7 @@
                         y: Math.random() * canvas.height,
                         vx: 2 + Math.random() * 2,
                         vy: (Math.random() - 0.5) * 2,
-                        size: 8,
+                        size: 4,
                         health: 100,
                         type: 'allah'
                     });
@@ -600,7 +615,7 @@
                         y: Math.random() * canvas.height,
                         vx: -2 - Math.random() * 2,
                         vy: (Math.random() - 0.5) * 2,
-                        size: 8,
+                        size: 4,
                         health: 100,
                         type: 'emir'
                     });
@@ -634,13 +649,13 @@
 
                         if (dist < 50) {
                             if (Math.random() > 0.5) {
-                                this.emirUnits[j].health -= 25;
+                                this.emirUnits[j].health -= 3;
+                                this.totalKilled += 0.05;
                                 this.playSound('hit');
-                                this.totalKilled++;
                             } else {
-                                this.allahUnits[i].health -= 25;
+                                this.allahUnits[i].health -= 3;
+                                this.totalKilled += 0.05;
                                 this.playSound('hit');
-                                this.totalKilled++;
                             }
                         }
                     }
@@ -662,8 +677,8 @@
                     return true;
                 });
 
-                // ÇOKÇA BOMBA!
-                if (this.time % 3 === 0 && Math.random() > 0.1) {
+                // HAFIF BOMBA (1 dakika sürsün diye)
+                if (this.time % 12 === 0 && Math.random() > 0.5) {
                     const x = Math.random() * canvas.width;
                     const y = Math.random() * canvas.height;
                     this.createExplosion(x, y);
@@ -674,8 +689,8 @@
                         const dy = u.y - y;
                         const dist = Math.sqrt(dx * dx + dy * dy);
                         if (dist < 150) {
-                            u.health -= 40;
-                            this.totalKilled += 0.3;
+                            u.health -= 5;
+                            this.totalKilled += 0.08;
                         }
                     });
 
@@ -684,8 +699,8 @@
                         const dy = u.y - y;
                         const dist = Math.sqrt(dx * dx + dy * dy);
                         if (dist < 150) {
-                            u.health -= 40;
-                            this.totalKilled += 0.3;
+                            u.health -= 5;
+                            this.totalKilled += 0.08;
                         }
                     });
                 }
@@ -696,8 +711,8 @@
                     e.life -= 0.03;
                 });
 
-                // DARK MIZAH YAZILARI (ÇOK SIKLIKI)
-                if (this.time % 25 === 0) {
+                // ÇOKÇA DARK MIZAH (HER 15 FRAME'DE)
+                if (this.time % 15 === 0) {
                     const allahKonuşma = this.allahMesajlar[Math.floor(Math.random() * this.allahMesajlar.length)];
                     const emirKonuşma = this.emirMesajlar[Math.floor(Math.random() * this.emirMesajlar.length)];
                     const nötrKonuşma = this.nötrMesajlar[Math.floor(Math.random() * this.nötrMesajlar.length)];
@@ -854,10 +869,10 @@
                         osc.connect(gain);
                         gain.connect(audioContext.destination);
                         osc.frequency.value = 280 + Math.random() * 150;
-                        gain.gain.setValueAtTime(0.08, audioContext.currentTime);
-                        gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.04);
+                        gain.gain.setValueAtTime(0.05, audioContext.currentTime);
+                        gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.03);
                         osc.start();
-                        osc.stop(audioContext.currentTime + 0.04);
+                        osc.stop(audioContext.currentTime + 0.03);
                     } else if (type === 'bomb') {
                         const osc = audioContext.createOscillator();
                         const gain = audioContext.createGain();
@@ -865,7 +880,7 @@
                         gain.connect(audioContext.destination);
                         osc.frequency.setValueAtTime(450, audioContext.currentTime);
                         osc.frequency.exponentialRampToValueAtTime(80, audioContext.currentTime + 0.8);
-                        gain.gain.setValueAtTime(0.35, audioContext.currentTime);
+                        gain.gain.setValueAtTime(0.3, audioContext.currentTime);
                         gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.8);
                         osc.start();
                         osc.stop(audioContext.currentTime + 0.8);
@@ -877,7 +892,7 @@
                                 o.connect(g);
                                 g.connect(audioContext.destination);
                                 o.frequency.value = 800 + i * 200;
-                                g.gain.setValueAtTime(0.3, audioContext.currentTime);
+                                g.gain.setValueAtTime(0.25, audioContext.currentTime);
                                 g.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.4);
                                 o.start();
                                 o.stop(audioContext.currentTime + 0.4);
@@ -911,9 +926,9 @@
                 const centerPanel = document.querySelector('.center-panel');
                 centerPanel.classList.remove('allah-leading', 'emir-leading');
                 
-                if (this.allahUnits.length > this.emirUnits.length + 2) {
+                if (this.allahUnits.length > this.emirUnits.length + 10) {
                     centerPanel.classList.add('allah-leading');
-                } else if (this.emirUnits.length > this.allahUnits.length + 2) {
+                } else if (this.emirUnits.length > this.allahUnits.length + 10) {
                     centerPanel.classList.add('emir-leading');
                 }
             },
@@ -937,7 +952,7 @@
 
                 ctx.fillStyle = '#00d4ff';
                 ctx.shadowColor = 'rgba(0, 212, 255, 0.8)';
-                ctx.shadowBlur = 15;
+                ctx.shadowBlur = 12;
                 this.allahUnits.forEach(unit => {
                     ctx.beginPath();
                     ctx.arc(unit.x, unit.y, unit.size, 0, Math.PI * 2);
@@ -947,7 +962,7 @@
 
                 ctx.fillStyle = '#ff1744';
                 ctx.shadowColor = 'rgba(255, 23, 68, 0.8)';
-                ctx.shadowBlur = 15;
+                ctx.shadowBlur = 12;
                 this.emirUnits.forEach(unit => {
                     ctx.beginPath();
                     ctx.arc(unit.x, unit.y, unit.size, 0, Math.PI * 2);
@@ -967,7 +982,7 @@
                     ctx.fill();
 
                     ctx.strokeStyle = `rgba(255, 220, 0, ${e.life})`;
-                    ctx.lineWidth = 4;
+                    ctx.lineWidth = 3;
                     ctx.stroke();
                 });
 
@@ -1000,8 +1015,8 @@
             },
 
             reset() {
-                this.allahSoldiers = 10;
-                this.emirSoldiers = 10;
+                this.allahSoldiers = 100;
+                this.emirSoldiers = 100;
                 this.totalKilled = 0;
                 this.paused = false;
                 this.gameOver = false;
