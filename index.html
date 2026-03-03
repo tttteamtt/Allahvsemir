@@ -438,577 +438,219 @@
     </div>
 
     <script>
-        // Ziyaretçi sayısı
-        let visitors = parseInt(localStorage.getItem('visitors') || '1') + 1;
-        localStorage.setItem('visitors', visitors);
-        document.getElementById('visitorCount').textContent = visitors;
+let visitors = parseInt(localStorage.getItem('visitors') || '1') + 1;
+localStorage.setItem('visitors', visitors);
+document.getElementById('visitorCount').textContent = visitors;
 
-        const canvas = document.getElementById('battlefieldCanvas');
-        const ctx = canvas.getContext('2d');
-        
-        function resizeCanvas() {
-            const container = canvas.parentElement;
-            canvas.width = container.offsetWidth;
-            canvas.height = container.offsetHeight - 80;
+const canvas = document.getElementById('battlefieldCanvas');
+const ctx = canvas.getContext('2d');
+
+function resizeCanvas() {
+    const container = canvas.parentElement;
+    canvas.width = container.offsetWidth;
+    canvas.height = container.offsetHeight - 80;
+}
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+
+setInterval(() => {
+    const now = new Date();
+    document.getElementById('clock').textContent =
+        now.toLocaleTimeString();
+}, 1000);
+
+const battle = {
+    allahSoldiers: 12,
+    emirSoldiers: 12,
+    allahMaxSoldiers: 12,
+    emirMaxSoldiers: 12,
+
+    totalKilled: 0,
+    paused: false,
+    gameOver: false,
+    time: 0,
+
+    allahUnits: [],
+    emirUnits: [],
+    explosions: [],
+    lastFrame: 0,
+
+    init() {
+        this.createUnits();
+        this.gameLoop();
+    },
+
+    createUnits() {
+        this.allahUnits = [];
+        this.emirUnits = [];
+
+        for (let i = 0; i < this.allahSoldiers; i++) {
+            this.allahUnits.push({
+                x: Math.random() * canvas.width * 0.3,
+                y: Math.random() * canvas.height,
+                vx: 1,
+                vy: (Math.random() - 0.5),
+                size: 4,
+                health: 100
+            });
         }
-        
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
 
-        setInterval(() => {
-            const now = new Date();
-            const hours = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            const seconds = String(now.getSeconds()).padStart(2, '0');
-            document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
-        }, 1000);
+        for (let i = 0; i < this.emirSoldiers; i++) {
+            this.emirUnits.push({
+                x: canvas.width * 0.7 + Math.random() * canvas.width * 0.3,
+                y: Math.random() * canvas.height,
+                vx: -1,
+                vy: (Math.random() - 0.5),
+                size: 4,
+                health: 100
+            });
+        }
+    },
 
-        const battle = {
-            allahSoldiers: 30,
-            emirSoldiers: 30,
-            allahMaxSoldiers: 30,
-            emirMaxSoldiers: 30,
-            totalKilled: 0,
-            paused: false,
-            gameOver: false,
-            time: 0,
-            
-            allahUnits: [],
-            emirUnits: [],
-            explosions: [],
+    update() {
+        if (this.paused || this.gameOver) return;
 
-            // EXTREME DARK MIZAH
-            allahMesajlar: [
-                "Allah: Emir'i tanrısal penis ile sikeceğim!",
-                "Allah: Sex budur, Emir'i yok ediyorum!",
-                "Allah: Tanrısal gücümle Emir'i anal yapacağım!",
-                "Allah: Emir'in anüsü cenaze yolunda!",
-                "Allah: Penis gücü = Savaş gücü x1000!",
-                "Allah: Emir'i tanrısal spermle daldırıyorum!",
-                "Allah: Seks yaparken Emir'in kalbi duruyor!",
-                "Allah: Tanrısal orgazmda Emir bitis!",
-                "Allah: Kıyafet yırtıp sex yaparken Emir ölüyor!",
-                "Allah: Emir'in vajinası cehenneme gidiyor!",
-                "Allah: Tanrısal penis Emir'i delip geçti!",
-                "Allah: Sex machine modunda Emir'i bitirdim!",
-                "Allah: Emir'e tanrısal ırz tacizi = Ölüm!",
-                "Allah: Spermin gücüyle Emir yok oluyor!",
-                "Allah: Tanrısal 69'de Emir boğuluyor!",
-            ],
+        this.time++;
 
-            emirMesajlar: [
-                "Emir: Allah'ı tanrısal penis ile sikeceğim!",
-                "Emir: Sex budur, Allah'ı yok ediyorum!",
-                "Emir: Tanrısal gücümle Allah'ı anal yapacağım!",
-                "Emir: Allah'ın anüsü cenaze yolunda!",
-                "Emir: Penis gücü = Savaş gücü x1000!",
-                "Emir: Allah'ı tanrısal spermle daldırıyorum!",
-                "Emir: Seks yaparken Allah'ın kalbi duruyor!",
-                "Emir: Tanrısal orgazmda Allah bitis!",
-                "Emir: Kıyafet yırtıp sex yaparken Allah ölüyor!",
-                "Emir: Allah'ın vajinası cehenneme gidiyor!",
-                "Emir: Tanrısal penis Allah'ı delip geçti!",
-                "Emir: Sex machine modunda Allah'ı bitirdim!",
-                "Emir: Allah'a tanrısal ırz tacizi = Ölüm!",
-                "Emir: Spermin gücüyle Allah yok oluyor!",
-                "Emir: Tanrısal 69'de Allah boğuluyor!",
-            ],
+        // 1 DAKİKA SINIR
+        if (this.time > 1800) { // 30fps * 60 saniye
+            if (this.allahUnits.length > this.emirUnits.length)
+                this.endGame('allah');
+            else if (this.emirUnits.length > this.allahUnits.length)
+                this.endGame('emir');
+            else
+                this.endGame('berabere');
+        }
 
-            nötrMesajlar: [
-                "💥 Tanrısal penis çarpışması başladı!",
-                "🔞 18+ Sex savaş devam ediyor!",
-                "💀 Sperm'le kemikler eridiyor!",
-                "🧬 DNA'lar sex by yüzünden bozuluyor!",
-                "🍑 Kıçlar tanrısal çarpıştı!",
-                "🍆 Penis tanrısal boyuta ulaştı!",
-                "😈 Şeytan: 'Bu çok dark!'",
-                "🌪️ Tanrısal rüzgar savaş alanını sildi!",
-                "💋 Dudaklar tanrısal öpüştü!",
-                "🎪 Sirk: 'Biz daha iyi gösteri bulamayız!'",
-                "⚡ Elektrik discharge = Tanrısal sex!",
-                "🔥 Ateş sexten mi cıkıyor?",
-                "💔 Kalp atışı: Sex ritmine ayak uydurmuyor!",
-                "🌊 Sperm okyanusa döndü!",
-                "👻 Ruhlar: 'Bu ne? Hiç görmemiş!'",
-            ],
+        [...this.allahUnits, ...this.emirUnits].forEach(u => {
+            u.x += u.vx;
+            u.y += u.vy;
 
-            allahKazanMesajlari: [
-                "ALLAH KAZANDI! TANRISAL SEX'LE EMİR'İ ÖLDÜRDÜ!",
-                "Allah: Tanrısal penis Emir'i delip geçti!",
-                "Allah: Sex orgaszmında Emir ölü!",
-                "Allah: Tanrısal spermin gücüyle Emir yok!",
-                "Allah: Seks yaparken Emir'in kalbi durdu!",
-                "Allah: Tanrısal gücümle Emir'i anal ettim, cansız kaldı!",
-                "Allah: Penis başarısı = Savaş başarısı!",
-                "Allah: Emir'i sex makinesi ile bitirdim!",
-                "Allah: Kıyafet yırtıp Emir'i sikip öldürdüm!",
-                "Allah: Tanrısal jaculasyonda Emir'in beyin çıktı!",
-            ],
+            if (u.y < 0 || u.y > canvas.height) u.vy *= -1;
+        });
 
-            emirKazanMesajlari: [
-                "EMİR KAZANDI! TANRISAL SEX'LE ALLAH'I ÖLDÜRDÜ!",
-                "Emir: Tanrısal penis Allah'ı delip geçti!",
-                "Emir: Sex orgaszmında Allah ölü!",
-                "Emir: Tanrısal spermin gücüyle Allah yok!",
-                "Emir: Seks yaparken Allah'ın kalbi durdu!",
-                "Emir: Tanrısal gücümle Allah'ı anal ettim, cansız kaldı!",
-                "Emir: Penis başarısı = Savaş başarısı!",
-                "Emir: Allah'ı sex makinesi ile bitirdim!",
-                "Emir: Kıyafet yırtıp Allah'ı sikip öldürdüm!",
-                "Emir: Tanrısal jaculasyonda Allah'ın beyin çıktı!",
-            ],
+        // Daha hafif çarpışma
+        for (let i = 0; i < this.allahUnits.length; i++) {
+            for (let j = 0; j < this.emirUnits.length; j++) {
 
-            init() {
-                this.createUnits();
-                this.gameLoop();
-            },
+                const dx = this.allahUnits[i].x - this.emirUnits[j].x;
+                const dy = this.allahUnits[i].y - this.emirUnits[j].y;
 
-            createUnits() {
-                this.allahUnits = [];
-                this.emirUnits = [];
-
-                for (let i = 0; i < this.allahSoldiers; i++) {
-                    this.allahUnits.push({
-                        x: Math.random() * canvas.width * 0.25,
-                        y: Math.random() * canvas.height,
-                        vx: 1.5 + Math.random() * 1,
-                        vy: (Math.random() - 0.5) * 1,
-                        size: 3,
-                        health: 100,
-                        type: 'allah'
-                    });
+                if (dx * dx + dy * dy < 625) { // 25px
+                    if (Math.random() > 0.5)
+                        this.emirUnits[j].health -= 4;
+                    else
+                        this.allahUnits[i].health -= 4;
                 }
-
-                for (let i = 0; i < this.emirSoldiers; i++) {
-                    this.emirUnits.push({
-                        x: canvas.width * 0.75 + Math.random() * canvas.width * 0.25,
-                        y: Math.random() * canvas.height,
-                        vx: -1.5 - Math.random() * 1,
-                        vy: (Math.random() - 0.5) * 1,
-                        size: 3,
-                        health: 100,
-                        type: 'emir'
-                    });
-                }
-            },
-
-            update() {
-                if (this.paused || this.gameOver) return;
-
-                this.time++;
-
-                this.allahUnits.forEach(unit => {
-                    unit.x += unit.vx;
-                    unit.y += unit.vy;
-                    if (unit.y < 0 || unit.y > canvas.height) unit.vy *= -1;
-                    unit.y = Math.max(0, Math.min(canvas.height, unit.y));
-                });
-
-                this.emirUnits.forEach(unit => {
-                    unit.x += unit.vx;
-                    unit.y += unit.vy;
-                    if (unit.y < 0 || unit.y > canvas.height) unit.vy *= -1;
-                    unit.y = Math.max(0, Math.min(canvas.height, unit.y));
-                });
-
-                // Hafif çatışma
-                for (let i = 0; i < this.allahUnits.length; i++) {
-                    for (let j = 0; j < this.emirUnits.length; j++) {
-                        const dx = this.allahUnits[i].x - this.emirUnits[j].x;
-                        const dy = this.allahUnits[i].y - this.emirUnits[j].y;
-                        const dist = Math.sqrt(dx * dx + dy * dy);
-
-                        if (dist < 50) {
-                            if (Math.random() > 0.5) {
-                                this.emirUnits[j].health -= 2;
-                                this.totalKilled += 0.03;
-                            } else {
-                                this.allahUnits[i].health -= 2;
-                                this.totalKilled += 0.03;
-                            }
-                        }
-                    }
-                }
-
-                this.allahUnits = this.allahUnits.filter(u => {
-                    if (u.health <= 0) {
-                        this.createExplosion(u.x, u.y);
-                        return false;
-                    }
-                    return true;
-                });
-
-                this.emirUnits = this.emirUnits.filter(u => {
-                    if (u.health <= 0) {
-                        this.createExplosion(u.x, u.y);
-                        return false;
-                    }
-                    return true;
-                });
-
-                // Az bomba
-                if (this.time % 20 === 0 && Math.random() > 0.6) {
-                    const x = Math.random() * canvas.width;
-                    const y = Math.random() * canvas.height;
-                    this.createExplosion(x, y);
-                    this.playSound('bomb');
-
-                    this.allahUnits.forEach(u => {
-                        const dx = u.x - x;
-                        const dy = u.y - y;
-                        const dist = Math.sqrt(dx * dx + dy * dy);
-                        if (dist < 150) {
-                            u.health -= 3;
-                            this.totalKilled += 0.05;
-                        }
-                    });
-
-                    this.emirUnits.forEach(u => {
-                        const dx = u.x - x;
-                        const dy = u.y - y;
-                        const dist = Math.sqrt(dx * dx + dy * dy);
-                        if (dist < 150) {
-                            u.health -= 3;
-                            this.totalKilled += 0.05;
-                        }
-                    });
-                }
-
-                this.explosions = this.explosions.filter(e => e.life > 0);
-                this.explosions.forEach(e => {
-                    e.radius += 5;
-                    e.life -= 0.03;
-                });
-
-                // FULL DARK MIZAH HER 10 FRAME'DE
-                if (this.time % 10 === 0) {
-                    const random = Math.random();
-                    
-                    if (this.allahUnits.length > this.emirUnits.length) {
-                        if (random < 0.4) {
-                            const msg = this.allahMesajlar[Math.floor(Math.random() * this.allahMesajlar.length)];
-                            this.addMessage('allah', msg);
-                        } else if (random < 0.7) {
-                            const msg = this.emirMesajlar[Math.floor(Math.random() * this.emirMesajlar.length)];
-                            this.addMessage('emir', msg);
-                        } else {
-                            const msg = this.nötrMesajlar[Math.floor(Math.random() * this.nötrMesajlar.length)];
-                            this.addMessage('neutral', msg);
-                        }
-                    } else if (this.emirUnits.length > this.allahUnits.length) {
-                        if (random < 0.4) {
-                            const msg = this.emirMesajlar[Math.floor(Math.random() * this.emirMesajlar.length)];
-                            this.addMessage('emir', msg);
-                        } else if (random < 0.7) {
-                            const msg = this.allahMesajlar[Math.floor(Math.random() * this.allahMesajlar.length)];
-                            this.addMessage('allah', msg);
-                        } else {
-                            const msg = this.nötrMesajlar[Math.floor(Math.random() * this.nötrMesajlar.length)];
-                            this.addMessage('neutral', msg);
-                        }
-                    } else {
-                        const choice = random < 0.33 ? 'allah' : random < 0.66 ? 'emir' : 'neutral';
-                        if (choice === 'allah') {
-                            const msg = this.allahMesajlar[Math.floor(Math.random() * this.allahMesajlar.length)];
-                            this.addMessage('allah', msg);
-                        } else if (choice === 'emir') {
-                            const msg = this.emirMesajlar[Math.floor(Math.random() * this.emirMesajlar.length)];
-                            this.addMessage('emir', msg);
-                        } else {
-                            const msg = this.nötrMesajlar[Math.floor(Math.random() * this.nötrMesajlar.length)];
-                            this.addMessage('neutral', msg);
-                        }
-                    }
-                }
-
-                if (this.allahUnits.length === 0 && this.emirUnits.length === 0) {
-                    this.endGame('berabere');
-                } else if (this.allahUnits.length === 0) {
-                    this.endGame('emir');
-                } else if (this.emirUnits.length === 0) {
-                    this.endGame('allah');
-                }
-
-                this.updateStats();
-            },
-
-            createExplosion(x, y) {
-                this.explosions.push({
-                    x: x,
-                    y: y,
-                    radius: 0,
-                    life: 1,
-                    maxRadius: 150
-                });
-            },
-
-            addMessage(type, text) {
-                const now = new Date();
-                const time = String(now.getHours()).padStart(2, '0') + ':' + 
-                            String(now.getMinutes()).padStart(2, '0') + ':' +
-                            String(now.getSeconds()).padStart(2, '0');
-
-                const msg = document.createElement('div');
-                msg.className = `chat-message ${type}-message`;
-                msg.innerHTML = `<div class="message-time">[${time}]</div>${text}`;
-
-                if (type === 'allah') {
-                    document.getElementById('allahChat').appendChild(msg);
-                    if (document.getElementById('allahChat').children.length > 25) {
-                        document.getElementById('allahChat').removeChild(
-                            document.getElementById('allahChat').firstChild
-                        );
-                    }
-                    document.getElementById('allahChat').scrollTop = document.getElementById('allahChat').scrollHeight;
-                } else if (type === 'emir') {
-                    document.getElementById('emirChat').appendChild(msg);
-                    if (document.getElementById('emirChat').children.length > 25) {
-                        document.getElementById('emirChat').removeChild(
-                            document.getElementById('emirChat').firstChild
-                        );
-                    }
-                    document.getElementById('emirChat').scrollTop = document.getElementById('emirChat').scrollHeight;
-                } else {
-                    document.getElementById('allahChat').appendChild(msg.cloneNode(true));
-                    if (document.getElementById('allahChat').children.length > 25) {
-                        document.getElementById('allahChat').removeChild(
-                            document.getElementById('allahChat').firstChild
-                        );
-                    }
-                    
-                    document.getElementById('emirChat').appendChild(msg);
-                    if (document.getElementById('emirChat').children.length > 25) {
-                        document.getElementById('emirChat').removeChild(
-                            document.getElementById('emirChat').firstChild
-                        );
-                    }
-                    document.getElementById('emirChat').scrollTop = document.getElementById('emirChat').scrollHeight;
-                }
-            },
-
-            endGame(winner) {
-                this.gameOver = true;
-                const overlay = document.getElementById('winnerOverlay');
-                const content = document.getElementById('winnerContent');
-                
-                let title, messages, type;
-                
-                if (winner === 'allah') {
-                    title = '🔵 ALLAH KAZANDI! 🔵';
-                    messages = this.allahKazanMesajlari;
-                    type = 'allah';
-                } else if (winner === 'emir') {
-                    title = '🔴 EMİR KAZANDI! 🔴';
-                    messages = this.emirKazanMesajlari;
-                    type = 'emir';
-                } else {
-                    title = '⚖️ BERABERE! ⚖️';
-                    messages = ['Her iki ordu da yok oldu!', 'Tarih yazılamadı!'];
-                    type = 'neutral';
-                }
-
-                const randomMessages = [];
-                for (let i = 0; i < 3; i++) {
-                    randomMessages.push(messages[Math.floor(Math.random() * messages.length)]);
-                }
-
-                let html = `
-                    <div class="winner-title ${type}">${title}</div>
-                    <div class="winner-messages">
-                `;
-
-                randomMessages.forEach((msg) => {
-                    html += `<div class="dark-message ${type}">${msg}</div>`;
-                });
-
-                html += `
-                    </div>
-                    <div style="margin-top: 30px; color: #00ff88; font-size: 18px;">
-                        <div>💀 Toplam Öldü: ${Math.round(this.totalKilled)}</div>
-                        <div style="margin-top: 10px;">👥 Ziyaretçi: ${visitors}</div>
-                    </div>
-                    <button class="restart-button" onclick="battle.reset(); document.getElementById('winnerOverlay').style.display = 'none';">
-                        🔄 TEKRAR BAŞLA
-                    </button>
-                `;
-
-                content.innerHTML = html;
-                overlay.style.display = 'flex';
-                
-                this.playSound('victory');
-            },
-
-            playSound(type) {
-                try {
-                    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                    
-                    if (type === 'hit') {
-                        const osc = audioContext.createOscillator();
-                        const gain = audioContext.createGain();
-                        osc.connect(gain);
-                        gain.connect(audioContext.destination);
-                        osc.frequency.value = 280 + Math.random() * 150;
-                        gain.gain.setValueAtTime(0.05, audioContext.currentTime);
-                        gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.02);
-                        osc.start();
-                        osc.stop(audioContext.currentTime + 0.02);
-                    } else if (type === 'bomb') {
-                        const osc = audioContext.createOscillator();
-                        const gain = audioContext.createGain();
-                        osc.connect(gain);
-                        gain.connect(audioContext.destination);
-                        osc.frequency.setValueAtTime(400, audioContext.currentTime);
-                        osc.frequency.exponentialRampToValueAtTime(80, audioContext.currentTime + 0.6);
-                        gain.gain.setValueAtTime(0.2, audioContext.currentTime);
-                        gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.6);
-                        osc.start();
-                        osc.stop(audioContext.currentTime + 0.6);
-                    } else if (type === 'victory') {
-                        for (let i = 0; i < 8; i++) {
-                            setTimeout(() => {
-                                const o = audioContext.createOscillator();
-                                const g = audioContext.createGain();
-                                o.connect(g);
-                                g.connect(audioContext.destination);
-                                o.frequency.value = 800 + i * 150;
-                                g.gain.setValueAtTime(0.2, audioContext.currentTime);
-                                g.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
-                                o.start();
-                                o.stop(audioContext.currentTime + 0.3);
-                            }, i * 120);
-                        }
-                    }
-                } catch (e) {}
-            },
-
-            updateStats() {
-                document.getElementById('allahCount').textContent = this.allahUnits.length;
-                document.getElementById('emirCount').textContent = this.emirUnits.length;
-                document.getElementById('infoAllah').textContent = this.allahUnits.length;
-                document.getElementById('infoEmir').textContent = this.emirUnits.length;
-                document.getElementById('totalKilled').textContent = `💀 Toplam Öldü: ${Math.round(this.totalKilled)}`;
-                document.getElementById('footerKilled').textContent = Math.round(this.totalKilled);
-                
-                const allahHealth = Math.round((this.allahUnits.length / this.allahMaxSoldiers) * 100);
-                const emirHealth = Math.round((this.emirUnits.length / this.emirMaxSoldiers) * 100);
-                
-                document.getElementById('allahPower').textContent = allahHealth + '%';
-                document.getElementById('emirPower').textContent = emirHealth + '%';
-
-                const total = this.allahUnits.length + this.emirUnits.length;
-                if (total > 0) {
-                    const allahProb = Math.round((this.allahUnits.length / total) * 100);
-                    const emirProb = 100 - allahProb;
-                    document.getElementById('allahWinChance').textContent = allahProb + '%';
-                    document.getElementById('emirWinChance').textContent = emirProb + '%';
-                }
-
-                const centerPanel = document.querySelector('.center-panel');
-                centerPanel.classList.remove('allah-leading', 'emir-leading');
-                
-                if (this.allahUnits.length > this.emirUnits.length + 5) {
-                    centerPanel.classList.add('allah-leading');
-                } else if (this.emirUnits.length > this.allahUnits.length + 5) {
-                    centerPanel.classList.add('emir-leading');
-                }
-            },
-
-            draw() {
-                const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-                gradient.addColorStop(0, '#1a3a4a');
-                gradient.addColorStop(0.5, '#0f1a25');
-                gradient.addColorStop(1, '#1a3a4a');
-                ctx.fillStyle = gradient;
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-                ctx.strokeStyle = 'rgba(0, 255, 136, 0.3)';
-                ctx.lineWidth = 3;
-                ctx.setLineDash([40, 25]);
-                ctx.beginPath();
-                ctx.moveTo(canvas.width / 2, 0);
-                ctx.lineTo(canvas.width / 2, canvas.height);
-                ctx.stroke();
-                ctx.setLineDash([]);
-
-                ctx.fillStyle = '#00d4ff';
-                ctx.shadowColor = 'rgba(0, 212, 255, 0.6)';
-                ctx.shadowBlur = 8;
-                this.allahUnits.forEach(unit => {
-                    ctx.beginPath();
-                    ctx.arc(unit.x, unit.y, unit.size, 0, Math.PI * 2);
-                    ctx.fill();
-                });
-                ctx.shadowColor = 'transparent';
-
-                ctx.fillStyle = '#ff1744';
-                ctx.shadowColor = 'rgba(255, 23, 68, 0.6)';
-                ctx.shadowBlur = 8;
-                this.emirUnits.forEach(unit => {
-                    ctx.beginPath();
-                    ctx.arc(unit.x, unit.y, unit.size, 0, Math.PI * 2);
-                    ctx.fill();
-                });
-                ctx.shadowColor = 'transparent';
-
-                this.explosions.forEach(e => {
-                    const gradient = ctx.createRadialGradient(e.x, e.y, 0, e.x, e.y, e.radius);
-                    gradient.addColorStop(0, `rgba(255, 220, 0, ${e.life * 0.6})`);
-                    gradient.addColorStop(0.5, `rgba(255, 100, 0, ${e.life * 0.3})`);
-                    gradient.addColorStop(1, `rgba(255, 23, 68, 0)`);
-                    
-                    ctx.fillStyle = gradient;
-                    ctx.beginPath();
-                    ctx.arc(e.x, e.y, e.radius, 0, Math.PI * 2);
-                    ctx.fill();
-
-                    ctx.strokeStyle = `rgba(255, 220, 0, ${e.life * 0.7})`;
-                    ctx.lineWidth = 2;
-                    ctx.stroke();
-                });
-
-                ctx.font = 'bold 20px Arial';
-                ctx.fillStyle = '#00d4ff';
-                ctx.textAlign = 'left';
-                ctx.fillText('🔵 ALLAH', 30, canvas.height - 20);
-
-                ctx.fillStyle = '#ff1744';
-                ctx.textAlign = 'right';
-                ctx.fillText('EMİR 🔴', canvas.width - 30, canvas.height - 20);
-
-                ctx.font = 'bold 56px Arial';
-                ctx.fillStyle = '#d4af37';
-                ctx.textAlign = 'center';
-                ctx.shadowColor = 'rgba(212, 175, 55, 0.6)';
-                ctx.shadowBlur = 15;
-                ctx.fillText(`${this.allahUnits.length} ⚔ ${this.emirUnits.length}`, canvas.width / 2, canvas.height / 2 + 15);
-                ctx.shadowColor = 'transparent';
-            },
-
-            gameLoop() {
-                this.update();
-                this.draw();
-                requestAnimationFrame(() => this.gameLoop());
-            },
-
-            togglePause() {
-                this.paused = !this.paused;
-            },
-
-            reset() {
-                this.allahSoldiers = 30;
-                this.emirSoldiers = 30;
-                this.totalKilled = 0;
-                this.paused = false;
-                this.gameOver = false;
-                this.time = 0;
-                this.createUnits();
-                document.getElementById('allahChat').innerHTML = '';
-                document.getElementById('emirChat').innerHTML = '';
-                this.updateStats();
             }
-        };
+        }
 
-        battle.init();
-    </script>
+        this.allahUnits = this.allahUnits.filter(u => u.health > 0);
+        this.emirUnits = this.emirUnits.filter(u => u.health > 0);
+
+        // Bombalar çok azaltıldı
+        if (this.time % 180 === 0 && Math.random() > 0.85) {
+            const x = Math.random() * canvas.width;
+            const y = Math.random() * canvas.height;
+            this.explosions.push({ x, y, r: 0, life: 1 });
+
+            this.allahUnits.forEach(u => {
+                if ((u.x - x) ** 2 + (u.y - y) ** 2 < 10000)
+                    u.health -= 10;
+            });
+            this.emirUnits.forEach(u => {
+                if ((u.x - x) ** 2 + (u.y - y) ** 2 < 10000)
+                    u.health -= 10;
+            });
+        }
+
+        this.explosions = this.explosions.filter(e => e.life > 0);
+        this.explosions.forEach(e => {
+            e.r += 3;
+            e.life -= 0.05;
+        });
+
+        this.updateStats();
+    },
+
+    draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = "#00d4ff";
+        this.allahUnits.forEach(u => {
+            ctx.beginPath();
+            ctx.arc(u.x, u.y, u.size, 0, Math.PI * 2);
+            ctx.fill();
+        });
+
+        ctx.fillStyle = "#ff1744";
+        this.emirUnits.forEach(u => {
+            ctx.beginPath();
+            ctx.arc(u.x, u.y, u.size, 0, Math.PI * 2);
+            ctx.fill();
+        });
+
+        this.explosions.forEach(e => {
+            ctx.beginPath();
+            ctx.arc(e.x, e.y, e.r, 0, Math.PI * 2);
+            ctx.strokeStyle = `rgba(255,150,0,${e.life})`;
+            ctx.stroke();
+        });
+    },
+
+    updateStats() {
+        document.getElementById('allahCount').textContent = this.allahUnits.length;
+        document.getElementById('emirCount').textContent = this.emirUnits.length;
+        document.getElementById('infoAllah').textContent = this.allahUnits.length;
+        document.getElementById('infoEmir').textContent = this.emirUnits.length;
+    },
+
+    endGame(winner) {
+        this.gameOver = true;
+        const overlay = document.getElementById('winnerOverlay');
+        const content = document.getElementById('winnerContent');
+
+        let title = winner === 'allah'
+            ? "🔵 ALLAH KAZANDI"
+            : winner === 'emir'
+                ? "🔴 EMİR KAZANDI"
+                : "⚖️ BERABERE";
+
+        content.innerHTML = `
+            <div class="winner-title">${title}</div>
+            <button class="restart-button"
+                onclick="battle.reset();document.getElementById('winnerOverlay').style.display='none';">
+                🔄 TEKRAR BAŞLA
+            </button>
+        `;
+
+        overlay.style.display = "flex";
+    },
+
+    togglePause() {
+        this.paused = !this.paused;
+    },
+
+    reset() {
+        this.time = 0;
+        this.gameOver = false;
+        this.createUnits();
+    },
+
+    gameLoop() {
+        const now = performance.now();
+
+        if (now - this.lastFrame > 33) { // 30 FPS
+            this.update();
+            this.draw();
+            this.lastFrame = now;
+        }
+
+        requestAnimationFrame(() => this.gameLoop());
+    }
+};
+
+battle.init();
+</script>
 </body>
 </html>
