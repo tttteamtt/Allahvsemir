@@ -17,11 +17,12 @@
             display: flex;
             min-height: 100vh;
             overflow: hidden;
+            flex-direction: column;
         }
 
         .container {
             width: 100%;
-            height: 100vh;
+            flex: 1;
             display: grid;
             grid-template-columns: 320px 1fr 320px;
             gap: 10px;
@@ -96,7 +97,7 @@
             padding: 10px;
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 5px;
         }
 
         .chat-message {
@@ -234,6 +235,16 @@
             box-shadow: 0 8px 25px rgba(0, 255, 136, 0.6);
         }
 
+        .footer {
+            background: rgba(10, 14, 27, 0.95);
+            border-top: 2px solid #00ff88;
+            padding: 15px;
+            text-align: center;
+            color: #00ff88;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
         .winner-overlay {
             position: fixed;
             top: 0;
@@ -366,7 +377,7 @@
             <div class="team-stats">
                 <div class="stat-line">
                     <span>Askerler:</span>
-                    <span class="stat-value" id="allahCount">100</span>
+                    <span class="stat-value" id="allahCount">30</span>
                 </div>
                 <div class="stat-line">
                     <span>Güç:</span>
@@ -388,9 +399,9 @@
             </div>
             <canvas id="battlefieldCanvas"></canvas>
             <div class="battle-info">
-                <div>🔵 Allah: <span id="infoAllah">100</span></div>
+                <div>🔵 Allah: <span id="infoAllah">30</span></div>
                 <div id="totalKilled">💀 Toplam Öldü: 0</div>
-                <div>🔴 Emir: <span id="infoEmir">100</span></div>
+                <div>🔴 Emir: <span id="infoEmir">30</span></div>
             </div>
             <div class="battle-controls">
                 <button class="control-btn" onclick="battle.togglePause()">⏸️ DURAKLAT</button>
@@ -403,7 +414,7 @@
             <div class="team-stats">
                 <div class="stat-line">
                     <span>Askerler:</span>
-                    <span class="stat-value" id="emirCount">100</span>
+                    <span class="stat-value" id="emirCount">30</span>
                 </div>
                 <div class="stat-line">
                     <span>Güç:</span>
@@ -418,11 +429,20 @@
         </div>
     </div>
 
+    <div class="footer">
+        👥 Toplam Ziyaretçi: <span id="visitorCount">1</span> | 💀 Toplam Ölüm: <span id="footerKilled">0</span>
+    </div>
+
     <div class="winner-overlay" id="winnerOverlay">
         <div class="winner-content" id="winnerContent"></div>
     </div>
 
     <script>
+        // Ziyaretçi sayısı
+        let visitors = parseInt(localStorage.getItem('visitors') || '1') + 1;
+        localStorage.setItem('visitors', visitors);
+        document.getElementById('visitorCount').textContent = visitors;
+
         const canvas = document.getElementById('battlefieldCanvas');
         const ctx = canvas.getContext('2d');
         
@@ -444,10 +464,10 @@
         }, 1000);
 
         const battle = {
-            allahSoldiers: 100,
-            emirSoldiers: 100,
-            allahMaxSoldiers: 100,
-            emirMaxSoldiers: 100,
+            allahSoldiers: 30,
+            emirSoldiers: 30,
+            allahMaxSoldiers: 30,
+            emirMaxSoldiers: 30,
             totalKilled: 0,
             paused: false,
             gameOver: false,
@@ -457,135 +477,85 @@
             emirUnits: [],
             explosions: [],
 
-            // EXTREME DARK MIZAH - SEX, TANRISAL GÜÇ VB
+            // EXTREME DARK MIZAH
             allahMesajlar: [
-                "Allah: Emir'i tanrısal gücümle sikeceğim! 🌪️",
-                "Allah: Emir'in anüsü mübarek yere kütür! 💥",
+                "Allah: Emir'i tanrısal penis ile sikeceğim!",
                 "Allah: Sex budur, Emir'i yok ediyorum!",
-                "Allah askeri: 'Emir'i diri diri sikiş!",
-                "Allah: Tanrısal penis ile Emir'i delip geçeceğim!",
-                "Allah: Emir'in götü cenaze mübarek!",
-                "Allah: Seks yaparken Emir öldü! HAHAHAHA",
-                "Allah: Emir'e tanrısal felç vurduk!",
-                "Allah: Emir'in 18 deliğine 18 mermi!",
-                "Allah: Sikiş ile başlayıp savaş ile bitirdik!",
-                "Allah ordusunun biri: 'Emir'i sikip öldürdük!'",
-                "Allah: Tanrısal spermim Emir'i eritip gitti!",
-                "Allah: Emir'e tanrısal ırz tacizi yaptım!",
-                "Allah: Seks tanrısal, Emir'i sex etti!",
-                "Allah: Emir'i tanrısal penisin üstüne oturttum!",
-                "Allah: Kıyafetlerini yırtıp tanrısal sikerim!",
-                "Allah: Emir'in vajinası cehenneme gitti!",
-                "Allah: Tanrısal penis Emir'i paramparça etti!",
-                "Allah: Emir'i sex oyuncağı yaptım, hala sikiyorum!",
-                "Allah: Emir artık boşolmuş, ölü hale gelmiş!",
-                "Allah: Tanrısal gücümle Emir'i çırtlattım!",
-                "Allah: Emir'in idrar yoluna işıldıyorum!",
-                "Allah: Seks esnasında Emir'in kalbini kırdım!",
-                "Allah: Tanrısal jaculasyonda Emir cansız kaldı!",
-                "Allah: Emir'e tanrısal anal yapıp öldürdüm!",
+                "Allah: Tanrısal gücümle Emir'i anal yapacağım!",
+                "Allah: Emir'in anüsü cenaze yolunda!",
+                "Allah: Penis gücü = Savaş gücü x1000!",
+                "Allah: Emir'i tanrısal spermle daldırıyorum!",
+                "Allah: Seks yaparken Emir'in kalbi duruyor!",
+                "Allah: Tanrısal orgazmda Emir bitis!",
+                "Allah: Kıyafet yırtıp sex yaparken Emir ölüyor!",
+                "Allah: Emir'in vajinası cehenneme gidiyor!",
+                "Allah: Tanrısal penis Emir'i delip geçti!",
+                "Allah: Sex machine modunda Emir'i bitirdim!",
+                "Allah: Emir'e tanrısal ırz tacizi = Ölüm!",
+                "Allah: Spermin gücüyle Emir yok oluyor!",
+                "Allah: Tanrısal 69'de Emir boğuluyor!",
             ],
 
             emirMesajlar: [
-                "Emir: Allah'ı tanrısal gücümle sikeceğim! 🌪️",
-                "Emir: Allah'ın anüsü mübarek yere kütür! 💥",
+                "Emir: Allah'ı tanrısal penis ile sikeceğim!",
                 "Emir: Sex budur, Allah'ı yok ediyorum!",
-                "Emir askeri: 'Allah'ı diri diri sikiş!",
-                "Emir: Tanrısal penis ile Allah'ı delip geçeceğim!",
-                "Emir: Allah'ın götü cenaze mübarek!",
-                "Emir: Seks yaparken Allah öldü! HAHAHAHA",
-                "Emir: Allah'a tanrısal felç vurduk!",
-                "Emir: Allah'ın 18 deliğine 18 mermi!",
-                "Emir: Sikiş ile başlayıp savaş ile bitirdik!",
-                "Emir ordusunun biri: 'Allah'ı sikip öldürdük!'",
-                "Emir: Tanrısal spermim Allah'ı eritip gitti!",
-                "Emir: Allah'a tanrısal ırz tacizi yaptım!",
-                "Emir: Seks tanrısal, Allah'ı sex etti!",
-                "Emir: Allah'ı tanrısal penisin üstüne oturttum!",
-                "Emir: Kıyafetlerini yırtıp tanrısal sikerim!",
-                "Emir: Allah'ın vajinası cehenneme gitti!",
-                "Emir: Tanrısal penis Allah'ı paramparça etti!",
-                "Emir: Allah'ı sex oyuncağı yaptım, hala sikiyorum!",
-                "Emir: Allah artık boşolmuş, ölü hale gelmiş!",
-                "Emir: Tanrısal gücümle Allah'ı çırtlattım!",
-                "Emir: Allah'ın idrar yoluna işıldıyorum!",
-                "Emir: Seks esnasında Allah'ın kalbini kırdım!",
-                "Emir: Tanrısal jaculasyonda Allah cansız kaldı!",
-                "Emir: Allah'a tanrısal anal yapıp öldürdüm!",
+                "Emir: Tanrısal gücümle Allah'ı anal yapacağım!",
+                "Emir: Allah'ın anüsü cenaze yolunda!",
+                "Emir: Penis gücü = Savaş gücü x1000!",
+                "Emir: Allah'ı tanrısal spermle daldırıyorum!",
+                "Emir: Seks yaparken Allah'ın kalbi duruyor!",
+                "Emir: Tanrısal orgazmda Allah bitis!",
+                "Emir: Kıyafet yırtıp sex yaparken Allah ölüyor!",
+                "Emir: Allah'ın vajinası cehenneme gidiyor!",
+                "Emir: Tanrısal penis Allah'ı delip geçti!",
+                "Emir: Sex machine modunda Allah'ı bitirdim!",
+                "Emir: Allah'a tanrısal ırz tacizi = Ölüm!",
+                "Emir: Spermin gücüyle Allah yok oluyor!",
+                "Emir: Tanrısal 69'de Allah boğuluyor!",
             ],
 
             nötrMesajlar: [
-                "💥 BOOOOOM! Tanrısal penis çarpışması!",
-                "🔞 Sex açıklaması için +18 gerekli!",
-                "💀 Kemikler sperm ile erir gitti!",
-                "🧬 DNA'lar sex tarafından bozuldu!",
-                "🍽️ Kan kasapçısının stoğu doldu!",
-                "🌊 Sperm okyanusa döndü!",
-                "🔥 Tanrısal penis atşı yakıyor!",
-                "👻 Ruhlar sex izledi, şok oldu!",
-                "🧟 Zombi de bu kadar kanlı olmaz!",
-                "🎬 Pornoya bile bu sahne yapıştırılamaz!",
-                "⚫ Kara delik sperm absorbe etti!",
-                "🔬 Bilim: Bu ne ki? Sex mi savaş mı?",
-                "🧠 Nöroloji: Beyin + Sex = Explosion!",
-                "🏥 Hastaneler kendini kapatmış!",
-                "⚰️ Cenaze: Sex ile insan kalır mı?",
-                "🌍 Dünya: Bunu kopyalayamam!",
-                "🎨 Sanat: Sex'in sanatı budur!",
-                "💔 Aşk: Bu da sevişme mi sandılar?",
-                "🎪 Sirk: Daha iyi gösteri bulamaz!",
-                "🔊 Ses: Sex sesleri duyulsun muydu?",
-                "🌪️ Tanrısal gücü görmediniz mi?",
-                "💋 Dudaklar tanrısal öpüştü!",
+                "💥 Tanrısal penis çarpışması başladı!",
+                "🔞 18+ Sex savaş devam ediyor!",
+                "💀 Sperm'le kemikler eridiyor!",
+                "🧬 DNA'lar sex by yüzünden bozuluyor!",
                 "🍑 Kıçlar tanrısal çarpıştı!",
-                "🍆 Penis tanrısal büyüdü!",
-                "😈 Şeytan bile utandı bu sex'ten!",
+                "🍆 Penis tanrısal boyuta ulaştı!",
+                "😈 Şeytan: 'Bu çok dark!'",
+                "🌪️ Tanrısal rüzgar savaş alanını sildi!",
+                "💋 Dudaklar tanrısal öpüştü!",
+                "🎪 Sirk: 'Biz daha iyi gösteri bulamayız!'",
+                "⚡ Elektrik discharge = Tanrısal sex!",
+                "🔥 Ateş sexten mi cıkıyor?",
+                "💔 Kalp atışı: Sex ritmine ayak uydurmuyor!",
+                "🌊 Sperm okyanusa döndü!",
+                "👻 Ruhlar: 'Bu ne? Hiç görmemiş!'",
             ],
 
             allahKazanMesajlari: [
-                "ALLAH KAZANDI! TANRISAL SEX İLE EMİR'İ ÖLDÜRDÜ!",
-                "Allah: Emir'i tanrısal penis ile sikiş öld��!",
-                "Allah: Tanrısal gücümle Emir'i anal yaptı ölümü!",
-                "Allah: Sex orgaszmı Emir'i paramparça etti!",
-                "Allah: Tanrısal spermim Emir'i eritip gitti!",
-                "Allah: Seks yaparken Emir'in kalbi durdu! ZORT!",
-                "Allah: Tanrısal jaculasyonda Emir cansız!",
-                "Allah: Emir'in vajinası cehennemden geri getirildi!",
-                "Allah: Sex budur, Emir'i bu yolla yok ettim!",
-                "Allah: Tanrısal anüs tacizi Emir'i ölüm kucağına götürdü!",
-                "Allah: Emir'i diri diri sikerek öldüm mü? MUTHIS!",
-                "Allah: Tanrısal penis Emir'i iç deldi!",
-                "Allah: Kıyafet yırtarak siktiğim Emir bu!",
-                "Allah: Sex machine gibi çalışarak Emir'i bitirdim!",
-                "Allah: Emir'e tanrısal ırz tacizi = Ölüm!",
-                "Allah: Penis gücü > Savaş gücü! Emir'i sex etti!",
-                "Allah: Tanrısal 69 pozisyonunda Emir'i boğdum!",
-                "Allah: Emir'in idrar yoluna işerek öldürdüm!",
-                "Allah: Sex sonrası ceset Emir kaldı!",
-                "Allah: Tanrısal orgazmda Emir'in beyin çıktı!",
+                "ALLAH KAZANDI! TANRISAL SEX'LE EMİR'İ ÖLDÜRDÜ!",
+                "Allah: Tanrısal penis Emir'i delip geçti!",
+                "Allah: Sex orgaszmında Emir ölü!",
+                "Allah: Tanrısal spermin gücüyle Emir yok!",
+                "Allah: Seks yaparken Emir'in kalbi durdu!",
+                "Allah: Tanrısal gücümle Emir'i anal ettim, cansız kaldı!",
+                "Allah: Penis başarısı = Savaş başarısı!",
+                "Allah: Emir'i sex makinesi ile bitirdim!",
+                "Allah: Kıyafet yırtıp Emir'i sikip öldürdüm!",
+                "Allah: Tanrısal jaculasyonda Emir'in beyin çıktı!",
             ],
 
             emirKazanMesajlari: [
-                "EMİR KAZANDI! TANRISAL SEX İLE ALLAH'I ÖLDÜRDÜ!",
-                "Emir: Allah'ı tanrısal penis ile sikiş öldü!",
-                "Emir: Tanrısal gücümle Allah'ı anal yaptı ölümü!",
-                "Emir: Sex orgaszmı Allah'ı paramparça etti!",
-                "Emir: Tanrısal spermim Allah'ı eritip gitti!",
-                "Emir: Seks yaparken Allah'ın kalbi durdu! ZORT!",
-                "Emir: Tanrısal jaculasyonda Allah cansız!",
-                "Emir: Allah'ın vajinası cehennemden geri getirildi!",
-                "Emir: Sex budur, Allah'ı bu yolla yok ettim!",
-                "Emir: Tanrısal anüs tacizi Allah'ı ölüm kucağına götürdü!",
-                "Emir: Allah'ı diri diri sikerek öldüm mü? MUTHIS!",
-                "Emir: Tanrısal penis Allah'ı iç deldi!",
-                "Emir: Kıyafet yırtarak siktiğim Allah bu!",
-                "Emir: Sex machine gibi çalışarak Allah'ı bitirdim!",
-                "Emir: Allah'a tanrısal ırz tacizi = Ölüm!",
-                "Emir: Penis gücü > Savaş gücü! Allah'ı sex etti!",
-                "Emir: Tanrısal 69 pozisyonunda Allah'ı boğdum!",
-                "Emir: Allah'ın idrar yoluna işerek öldürdüm!",
-                "Emir: Sex sonrası ceset Allah kaldı!",
-                "Emir: Tanrısal orgazmda Allah'ın beyin çıktı!",
+                "EMİR KAZANDI! TANRISAL SEX'LE ALLAH'I ÖLDÜRDÜ!",
+                "Emir: Tanrısal penis Allah'ı delip geçti!",
+                "Emir: Sex orgaszmında Allah ölü!",
+                "Emir: Tanrısal spermin gücüyle Allah yok!",
+                "Emir: Seks yaparken Allah'ın kalbi durdu!",
+                "Emir: Tanrısal gücümle Allah'ı anal ettim, cansız kaldı!",
+                "Emir: Penis başarısı = Savaş başarısı!",
+                "Emir: Allah'ı sex makinesi ile bitirdim!",
+                "Emir: Kıyafet yırtıp Allah'ı sikip öldürdüm!",
+                "Emir: Tanrısal jaculasyonda Allah'ın beyin çıktı!",
             ],
 
             init() {
@@ -601,9 +571,9 @@
                     this.allahUnits.push({
                         x: Math.random() * canvas.width * 0.25,
                         y: Math.random() * canvas.height,
-                        vx: 2 + Math.random() * 2,
-                        vy: (Math.random() - 0.5) * 2,
-                        size: 4,
+                        vx: 1.5 + Math.random() * 1,
+                        vy: (Math.random() - 0.5) * 1,
+                        size: 3,
                         health: 100,
                         type: 'allah'
                     });
@@ -613,9 +583,9 @@
                     this.emirUnits.push({
                         x: canvas.width * 0.75 + Math.random() * canvas.width * 0.25,
                         y: Math.random() * canvas.height,
-                        vx: -2 - Math.random() * 2,
-                        vy: (Math.random() - 0.5) * 2,
-                        size: 4,
+                        vx: -1.5 - Math.random() * 1,
+                        vy: (Math.random() - 0.5) * 1,
+                        size: 3,
                         health: 100,
                         type: 'emir'
                     });
@@ -641,6 +611,7 @@
                     unit.y = Math.max(0, Math.min(canvas.height, unit.y));
                 });
 
+                // Hafif çatışma
                 for (let i = 0; i < this.allahUnits.length; i++) {
                     for (let j = 0; j < this.emirUnits.length; j++) {
                         const dx = this.allahUnits[i].x - this.emirUnits[j].x;
@@ -649,13 +620,11 @@
 
                         if (dist < 50) {
                             if (Math.random() > 0.5) {
-                                this.emirUnits[j].health -= 3;
-                                this.totalKilled += 0.05;
-                                this.playSound('hit');
+                                this.emirUnits[j].health -= 2;
+                                this.totalKilled += 0.03;
                             } else {
-                                this.allahUnits[i].health -= 3;
-                                this.totalKilled += 0.05;
-                                this.playSound('hit');
+                                this.allahUnits[i].health -= 2;
+                                this.totalKilled += 0.03;
                             }
                         }
                     }
@@ -677,8 +646,8 @@
                     return true;
                 });
 
-                // HAFIF BOMBA (1 dakika sürsün diye)
-                if (this.time % 12 === 0 && Math.random() > 0.5) {
+                // Az bomba
+                if (this.time % 20 === 0 && Math.random() > 0.6) {
                     const x = Math.random() * canvas.width;
                     const y = Math.random() * canvas.height;
                     this.createExplosion(x, y);
@@ -689,8 +658,8 @@
                         const dy = u.y - y;
                         const dist = Math.sqrt(dx * dx + dy * dy);
                         if (dist < 150) {
-                            u.health -= 5;
-                            this.totalKilled += 0.08;
+                            u.health -= 3;
+                            this.totalKilled += 0.05;
                         }
                     });
 
@@ -699,47 +668,56 @@
                         const dy = u.y - y;
                         const dist = Math.sqrt(dx * dx + dy * dy);
                         if (dist < 150) {
-                            u.health -= 5;
-                            this.totalKilled += 0.08;
+                            u.health -= 3;
+                            this.totalKilled += 0.05;
                         }
                     });
                 }
 
                 this.explosions = this.explosions.filter(e => e.life > 0);
                 this.explosions.forEach(e => {
-                    e.radius += 8;
+                    e.radius += 5;
                     e.life -= 0.03;
                 });
 
-                // ÇOKÇA DARK MIZAH (HER 15 FRAME'DE)
-                if (this.time % 15 === 0) {
-                    const allahKonuşma = this.allahMesajlar[Math.floor(Math.random() * this.allahMesajlar.length)];
-                    const emirKonuşma = this.emirMesajlar[Math.floor(Math.random() * this.emirMesajlar.length)];
-                    const nötrKonuşma = this.nötrMesajlar[Math.floor(Math.random() * this.nötrMesajlar.length)];
-
+                // FULL DARK MIZAH HER 10 FRAME'DE
+                if (this.time % 10 === 0) {
                     const random = Math.random();
                     
                     if (this.allahUnits.length > this.emirUnits.length) {
-                        if (random < 0.5) {
-                            this.addMessage('allah', allahKonuşma);
-                        } else if (random < 0.8) {
-                            this.addMessage('emir', emirKonuşma);
+                        if (random < 0.4) {
+                            const msg = this.allahMesajlar[Math.floor(Math.random() * this.allahMesajlar.length)];
+                            this.addMessage('allah', msg);
+                        } else if (random < 0.7) {
+                            const msg = this.emirMesajlar[Math.floor(Math.random() * this.emirMesajlar.length)];
+                            this.addMessage('emir', msg);
                         } else {
-                            this.addMessage('neutral', nötrKonuşma);
+                            const msg = this.nötrMesajlar[Math.floor(Math.random() * this.nötrMesajlar.length)];
+                            this.addMessage('neutral', msg);
                         }
                     } else if (this.emirUnits.length > this.allahUnits.length) {
-                        if (random < 0.5) {
-                            this.addMessage('emir', emirKonuşma);
-                        } else if (random < 0.8) {
-                            this.addMessage('allah', allahKonuşma);
+                        if (random < 0.4) {
+                            const msg = this.emirMesajlar[Math.floor(Math.random() * this.emirMesajlar.length)];
+                            this.addMessage('emir', msg);
+                        } else if (random < 0.7) {
+                            const msg = this.allahMesajlar[Math.floor(Math.random() * this.allahMesajlar.length)];
+                            this.addMessage('allah', msg);
                         } else {
-                            this.addMessage('neutral', nötrKonuşma);
+                            const msg = this.nötrMesajlar[Math.floor(Math.random() * this.nötrMesajlar.length)];
+                            this.addMessage('neutral', msg);
                         }
                     } else {
                         const choice = random < 0.33 ? 'allah' : random < 0.66 ? 'emir' : 'neutral';
-                        if (choice === 'allah') this.addMessage('allah', allahKonuşma);
-                        else if (choice === 'emir') this.addMessage('emir', emirKonuşma);
-                        else this.addMessage('neutral', nötrKonuşma);
+                        if (choice === 'allah') {
+                            const msg = this.allahMesajlar[Math.floor(Math.random() * this.allahMesajlar.length)];
+                            this.addMessage('allah', msg);
+                        } else if (choice === 'emir') {
+                            const msg = this.emirMesajlar[Math.floor(Math.random() * this.emirMesajlar.length)];
+                            this.addMessage('emir', msg);
+                        } else {
+                            const msg = this.nötrMesajlar[Math.floor(Math.random() * this.nötrMesajlar.length)];
+                            this.addMessage('neutral', msg);
+                        }
                     }
                 }
 
@@ -760,7 +738,7 @@
                     y: y,
                     radius: 0,
                     life: 1,
-                    maxRadius: 250
+                    maxRadius: 150
                 });
             },
 
@@ -776,7 +754,7 @@
 
                 if (type === 'allah') {
                     document.getElementById('allahChat').appendChild(msg);
-                    if (document.getElementById('allahChat').children.length > 20) {
+                    if (document.getElementById('allahChat').children.length > 25) {
                         document.getElementById('allahChat').removeChild(
                             document.getElementById('allahChat').firstChild
                         );
@@ -784,7 +762,7 @@
                     document.getElementById('allahChat').scrollTop = document.getElementById('allahChat').scrollHeight;
                 } else if (type === 'emir') {
                     document.getElementById('emirChat').appendChild(msg);
-                    if (document.getElementById('emirChat').children.length > 20) {
+                    if (document.getElementById('emirChat').children.length > 25) {
                         document.getElementById('emirChat').removeChild(
                             document.getElementById('emirChat').firstChild
                         );
@@ -792,14 +770,14 @@
                     document.getElementById('emirChat').scrollTop = document.getElementById('emirChat').scrollHeight;
                 } else {
                     document.getElementById('allahChat').appendChild(msg.cloneNode(true));
-                    if (document.getElementById('allahChat').children.length > 20) {
+                    if (document.getElementById('allahChat').children.length > 25) {
                         document.getElementById('allahChat').removeChild(
                             document.getElementById('allahChat').firstChild
                         );
                     }
                     
                     document.getElementById('emirChat').appendChild(msg);
-                    if (document.getElementById('emirChat').children.length > 20) {
+                    if (document.getElementById('emirChat').children.length > 25) {
                         document.getElementById('emirChat').removeChild(
                             document.getElementById('emirChat').firstChild
                         );
@@ -830,7 +808,7 @@
                 }
 
                 const randomMessages = [];
-                for (let i = 0; i < 4; i++) {
+                for (let i = 0; i < 3; i++) {
                     randomMessages.push(messages[Math.floor(Math.random() * messages.length)]);
                 }
 
@@ -845,8 +823,9 @@
 
                 html += `
                     </div>
-                    <div class="stats-display">
-                        <div class="stat-item">💀 Toplam Öldü: ${Math.round(this.totalKilled)}</div>
+                    <div style="margin-top: 30px; color: #00ff88; font-size: 18px;">
+                        <div>💀 Toplam Öldü: ${Math.round(this.totalKilled)}</div>
+                        <div style="margin-top: 10px;">👥 Ziyaretçi: ${visitors}</div>
                     </div>
                     <button class="restart-button" onclick="battle.reset(); document.getElementById('winnerOverlay').style.display = 'none';">
                         🔄 TEKRAR BAŞLA
@@ -870,33 +849,33 @@
                         gain.connect(audioContext.destination);
                         osc.frequency.value = 280 + Math.random() * 150;
                         gain.gain.setValueAtTime(0.05, audioContext.currentTime);
-                        gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.03);
+                        gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.02);
                         osc.start();
-                        osc.stop(audioContext.currentTime + 0.03);
+                        osc.stop(audioContext.currentTime + 0.02);
                     } else if (type === 'bomb') {
                         const osc = audioContext.createOscillator();
                         const gain = audioContext.createGain();
                         osc.connect(gain);
                         gain.connect(audioContext.destination);
-                        osc.frequency.setValueAtTime(450, audioContext.currentTime);
-                        osc.frequency.exponentialRampToValueAtTime(80, audioContext.currentTime + 0.8);
-                        gain.gain.setValueAtTime(0.3, audioContext.currentTime);
-                        gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.8);
+                        osc.frequency.setValueAtTime(400, audioContext.currentTime);
+                        osc.frequency.exponentialRampToValueAtTime(80, audioContext.currentTime + 0.6);
+                        gain.gain.setValueAtTime(0.2, audioContext.currentTime);
+                        gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.6);
                         osc.start();
-                        osc.stop(audioContext.currentTime + 0.8);
+                        osc.stop(audioContext.currentTime + 0.6);
                     } else if (type === 'victory') {
-                        for (let i = 0; i < 10; i++) {
+                        for (let i = 0; i < 8; i++) {
                             setTimeout(() => {
                                 const o = audioContext.createOscillator();
                                 const g = audioContext.createGain();
                                 o.connect(g);
                                 g.connect(audioContext.destination);
-                                o.frequency.value = 800 + i * 200;
-                                g.gain.setValueAtTime(0.25, audioContext.currentTime);
-                                g.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.4);
+                                o.frequency.value = 800 + i * 150;
+                                g.gain.setValueAtTime(0.2, audioContext.currentTime);
+                                g.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
                                 o.start();
-                                o.stop(audioContext.currentTime + 0.4);
-                            }, i * 150);
+                                o.stop(audioContext.currentTime + 0.3);
+                            }, i * 120);
                         }
                     }
                 } catch (e) {}
@@ -908,6 +887,7 @@
                 document.getElementById('infoAllah').textContent = this.allahUnits.length;
                 document.getElementById('infoEmir').textContent = this.emirUnits.length;
                 document.getElementById('totalKilled').textContent = `💀 Toplam Öldü: ${Math.round(this.totalKilled)}`;
+                document.getElementById('footerKilled').textContent = Math.round(this.totalKilled);
                 
                 const allahHealth = Math.round((this.allahUnits.length / this.allahMaxSoldiers) * 100);
                 const emirHealth = Math.round((this.emirUnits.length / this.emirMaxSoldiers) * 100);
@@ -926,9 +906,9 @@
                 const centerPanel = document.querySelector('.center-panel');
                 centerPanel.classList.remove('allah-leading', 'emir-leading');
                 
-                if (this.allahUnits.length > this.emirUnits.length + 10) {
+                if (this.allahUnits.length > this.emirUnits.length + 5) {
                     centerPanel.classList.add('allah-leading');
-                } else if (this.emirUnits.length > this.allahUnits.length + 10) {
+                } else if (this.emirUnits.length > this.allahUnits.length + 5) {
                     centerPanel.classList.add('emir-leading');
                 }
             },
@@ -942,7 +922,7 @@
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
 
                 ctx.strokeStyle = 'rgba(0, 255, 136, 0.3)';
-                ctx.lineWidth = 5;
+                ctx.lineWidth = 3;
                 ctx.setLineDash([40, 25]);
                 ctx.beginPath();
                 ctx.moveTo(canvas.width / 2, 0);
@@ -951,8 +931,8 @@
                 ctx.setLineDash([]);
 
                 ctx.fillStyle = '#00d4ff';
-                ctx.shadowColor = 'rgba(0, 212, 255, 0.8)';
-                ctx.shadowBlur = 12;
+                ctx.shadowColor = 'rgba(0, 212, 255, 0.6)';
+                ctx.shadowBlur = 8;
                 this.allahUnits.forEach(unit => {
                     ctx.beginPath();
                     ctx.arc(unit.x, unit.y, unit.size, 0, Math.PI * 2);
@@ -961,8 +941,8 @@
                 ctx.shadowColor = 'transparent';
 
                 ctx.fillStyle = '#ff1744';
-                ctx.shadowColor = 'rgba(255, 23, 68, 0.8)';
-                ctx.shadowBlur = 12;
+                ctx.shadowColor = 'rgba(255, 23, 68, 0.6)';
+                ctx.shadowBlur = 8;
                 this.emirUnits.forEach(unit => {
                     ctx.beginPath();
                     ctx.arc(unit.x, unit.y, unit.size, 0, Math.PI * 2);
@@ -972,8 +952,8 @@
 
                 this.explosions.forEach(e => {
                     const gradient = ctx.createRadialGradient(e.x, e.y, 0, e.x, e.y, e.radius);
-                    gradient.addColorStop(0, `rgba(255, 220, 0, ${e.life * 0.8})`);
-                    gradient.addColorStop(0.5, `rgba(255, 100, 0, ${e.life * 0.4})`);
+                    gradient.addColorStop(0, `rgba(255, 220, 0, ${e.life * 0.6})`);
+                    gradient.addColorStop(0.5, `rgba(255, 100, 0, ${e.life * 0.3})`);
                     gradient.addColorStop(1, `rgba(255, 23, 68, 0)`);
                     
                     ctx.fillStyle = gradient;
@@ -981,12 +961,12 @@
                     ctx.arc(e.x, e.y, e.radius, 0, Math.PI * 2);
                     ctx.fill();
 
-                    ctx.strokeStyle = `rgba(255, 220, 0, ${e.life})`;
-                    ctx.lineWidth = 3;
+                    ctx.strokeStyle = `rgba(255, 220, 0, ${e.life * 0.7})`;
+                    ctx.lineWidth = 2;
                     ctx.stroke();
                 });
 
-                ctx.font = 'bold 24px Arial';
+                ctx.font = 'bold 20px Arial';
                 ctx.fillStyle = '#00d4ff';
                 ctx.textAlign = 'left';
                 ctx.fillText('🔵 ALLAH', 30, canvas.height - 20);
@@ -995,12 +975,12 @@
                 ctx.textAlign = 'right';
                 ctx.fillText('EMİR 🔴', canvas.width - 30, canvas.height - 20);
 
-                ctx.font = 'bold 72px Arial';
+                ctx.font = 'bold 56px Arial';
                 ctx.fillStyle = '#d4af37';
                 ctx.textAlign = 'center';
-                ctx.shadowColor = 'rgba(212, 175, 55, 0.7)';
-                ctx.shadowBlur = 25;
-                ctx.fillText(`${this.allahUnits.length} ⚔ ${this.emirUnits.length}`, canvas.width / 2, canvas.height / 2 + 20);
+                ctx.shadowColor = 'rgba(212, 175, 55, 0.6)';
+                ctx.shadowBlur = 15;
+                ctx.fillText(`${this.allahUnits.length} ⚔ ${this.emirUnits.length}`, canvas.width / 2, canvas.height / 2 + 15);
                 ctx.shadowColor = 'transparent';
             },
 
@@ -1015,8 +995,8 @@
             },
 
             reset() {
-                this.allahSoldiers = 100;
-                this.emirSoldiers = 100;
+                this.allahSoldiers = 30;
+                this.emirSoldiers = 30;
                 this.totalKilled = 0;
                 this.paused = false;
                 this.gameOver = false;
