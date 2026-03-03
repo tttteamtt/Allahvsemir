@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Allah vs Emir - Savaş Oyunu</title>
+    <title>Allah vs Emir - Stratejik Savaş</title>
     <style>
         * {
             margin: 0;
@@ -12,8 +12,8 @@
         }
 
         body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0e27;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -24,139 +24,96 @@
 
         .container {
             width: 95%;
-            max-width: 900px;
-            background: linear-gradient(135deg, #0f3460 0%, #1a1a2e 100%);
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 
-                        inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            border: 2px solid #e94560;
-            animation: glow 3s ease-in-out infinite;
-        }
-
-        @keyframes glow {
-            0%, 100% { box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 
-                                   inset 0 1px 0 rgba(255, 255, 255, 0.1),
-                                   0 0 20px rgba(233, 69, 96, 0.5); }
-            50% { box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 
-                             inset 0 1px 0 rgba(255, 255, 255, 0.1),
-                             0 0 40px rgba(233, 69, 96, 0.8); }
+            max-width: 1000px;
+            background: linear-gradient(135deg, #0f1419 0%, #1a1f2e 100%);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            border: 1px solid #1a2333;
         }
 
         h1 {
             text-align: center;
-            margin-bottom: 30px;
-            font-size: 2.5em;
-            background: linear-gradient(45deg, #00d4ff, #0099ff, #00ff88);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
-            animation: float 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
+            margin-bottom: 25px;
+            font-size: 2.8em;
+            font-weight: 900;
+            letter-spacing: 3px;
+            color: #c0a080;
+            text-shadow: 0 2px 10px rgba(192, 160, 128, 0.3);
         }
 
         .stats-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 20px;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
 
         .stat-box {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 15px;
+            background: linear-gradient(135deg, #1a2333 0%, #0f1419 100%);
+            border-radius: 12px;
             padding: 20px;
             text-align: center;
-            border: 2px solid #00d4ff;
+            border: 1px solid #2a3a4a;
             transition: all 0.3s ease;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .stat-box::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            transition: left 0.5s;
-        }
-
-        .stat-box:hover::before {
-            left: 100%;
         }
 
         .stat-box:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.6);
+            border-color: #3a5a7a;
+            box-shadow: 0 5px 20px rgba(58, 90, 122, 0.2);
         }
 
         .stat-box h3 {
-            color: #00ff88;
-            font-size: 0.9em;
+            color: #a0a8b8;
+            font-size: 0.85em;
             margin-bottom: 10px;
             text-transform: uppercase;
             letter-spacing: 2px;
+            font-weight: 600;
         }
 
         .stat-value {
-            font-size: 2.5em;
-            font-weight: bold;
+            font-size: 3.5em;
+            font-weight: 900;
             margin: 10px 0;
-            animation: pulse 1s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+            font-variant-numeric: tabular-nums;
         }
 
         .stat-box.allah .stat-value {
-            color: #00d4ff;
-            text-shadow: 0 0 10px #00d4ff;
+            color: #7fa3c0;
         }
 
         .stat-box.emir .stat-value {
-            color: #ff6b9d;
-            text-shadow: 0 0 10px #ff6b9d;
+            color: #c07a7a;
+        }
+
+        .stat-info {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 12px;
+            font-size: 0.85em;
         }
 
         .percentage {
-            font-size: 0.8em;
-            color: #ffff00;
-            margin-top: 8px;
+            color: #d4af37;
             font-weight: bold;
         }
 
         .status-message {
-            font-size: 0.9em;
-            color: #00ff88;
-            margin-top: 8px;
-            min-height: 20px;
-            animation: blink 1s ease-in-out infinite;
-        }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
+            color: #7aa080;
+            font-weight: 600;
+            margin-top: 5px;
+            min-height: 18px;
         }
 
         .game-area {
-            background: linear-gradient(135deg, #0a0e27 0%, #1a1a2e 100%);
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 30px;
-            border: 2px solid #00ff88;
+            background: linear-gradient(135deg, #0a0e1a 0%, #0f1419 100%);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 25px;
+            border: 1px solid #1a2333;
             position: relative;
-            min-height: 400px;
+            min-height: 450px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -165,195 +122,180 @@
 
         #gameCanvas {
             display: block;
-            background: radial-gradient(circle at 30% 30%, #0f3460, #0a0e27);
-            border-radius: 10px;
+            background: linear-gradient(180deg, #0a0e1a 0%, #0f1419 100%);
+            border-radius: 8px;
             cursor: crosshair;
-            box-shadow: inset 0 0 50px rgba(0, 255, 136, 0.1);
             max-width: 100%;
-            height: auto;
+            box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.5);
         }
 
         .controls-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
             margin-bottom: 20px;
         }
 
         button {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            border: none;
-            color: white;
-            padding: 12px 20px;
-            font-size: 1em;
+            background: linear-gradient(135deg, #2a3a4a 0%, #1a2333 100%);
+            border: 1px solid #3a5a7a;
+            color: #b0c8e0;
+            padding: 12px 18px;
+            font-size: 0.95em;
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-weight: bold;
+            font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1px;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(245, 87, 108, 0.4);
-        }
-
-        button::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
-
-        button:hover::before {
-            width: 300px;
-            height: 300px;
         }
 
         button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(245, 87, 108, 0.6);
+            background: linear-gradient(135deg, #3a5a7a 0%, #2a3a4a 100%);
+            border-color: #5a8aaa;
+            box-shadow: 0 5px 15px rgba(90, 138, 170, 0.2);
+            color: #d0e8f0;
         }
 
         button:active {
-            transform: translateY(-1px);
-        }
-
-        button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
+            transform: scale(0.98);
         }
 
         .info-section {
-            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
-            border-radius: 10px;
-            padding: 20px;
-            margin-top: 20px;
-            border-left: 5px solid #00ff88;
+            background: linear-gradient(135deg, #1a2333 0%, #0f1419 100%);
+            border-radius: 12px;
+            padding: 18px;
+            border: 1px solid #2a3a4a;
+            border-left: 3px solid #7aa080;
         }
 
         .info-section h3 {
-            color: #00d4ff;
-            margin-bottom: 10px;
-            font-size: 1.2em;
+            color: #a0a8b8;
+            margin-bottom: 12px;
+            font-size: 1.1em;
+            font-weight: 600;
+            letter-spacing: 1px;
         }
 
         .dynamic-text {
-            font-size: 1.1em;
-            color: #ffff00;
-            font-weight: bold;
-            line-height: 1.6;
-            min-height: 40px;
-            animation: fadeInOut 3s ease-in-out infinite;
+            font-size: 1.15em;
+            color: #d4af37;
+            font-weight: 600;
+            line-height: 1.8;
+            min-height: 55px;
+            padding: 10px;
+            background: rgba(10, 14, 26, 0.5);
+            border-left: 3px solid #7aa080;
+            border-radius: 5px;
+            animation: textChange 0.8s ease-in-out;
         }
 
-        @keyframes fadeInOut {
-            0%, 100% { opacity: 0; }
-            20%, 80% { opacity: 1; }
+        @keyframes textChange {
+            0% { opacity: 0; transform: translateX(-10px); }
+            50% { opacity: 1; }
+            100% { opacity: 1; transform: translateX(0); }
         }
 
-        .effects-display {
+        .stats-display {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
+            gap: 12px;
             margin-top: 15px;
+        }
+
+        .stat-item {
+            background: rgba(26, 35, 51, 0.7);
+            border: 1px solid #2a3a4a;
+            padding: 10px 12px;
+            border-radius: 6px;
             font-size: 0.9em;
+            color: #a0a8b8;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .effect-item {
-            background: rgba(0, 255, 136, 0.1);
-            border-left: 3px solid #00ff88;
-            padding: 10px;
-            border-radius: 5px;
-            color: #00ff88;
-        }
-
-        .effect-item.active {
-            background: rgba(0, 255, 136, 0.3);
-            box-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+        .stat-item .value {
+            color: #d4af37;
+            font-weight: bold;
+            font-size: 1.1em;
         }
 
         .score-history {
-            margin-top: 20px;
-            max-height: 150px;
+            margin-top: 15px;
+            max-height: 180px;
             overflow-y: auto;
-            background: rgba(0, 0, 0, 0.3);
-            padding: 15px;
-            border-radius: 8px;
+            background: rgba(10, 14, 26, 0.5);
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid #1a2333;
         }
 
         .score-entry {
-            padding: 8px;
+            padding: 8px 10px;
             margin: 5px 0;
-            background: rgba(102, 126, 234, 0.2);
-            border-left: 3px solid #f5576c;
-            border-radius: 3px;
+            background: rgba(26, 35, 51, 0.6);
+            border-left: 3px solid #7aa080;
+            border-radius: 4px;
             font-size: 0.9em;
-            animation: slideIn 0.5s ease-out;
+            color: #a0a8b8;
+            display: flex;
+            justify-content: space-between;
         }
 
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateX(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
+        .score-entry .action {
+            color: #d4af37;
+            font-weight: 600;
         }
 
-        @media (max-width: 768px) {
-            .container {
-                padding: 15px;
-            }
-
-            h1 {
-                font-size: 1.8em;
-            }
-
-            .stats-container {
-                grid-template-columns: 1fr;
-            }
-
-            .stat-value {
-                font-size: 2em;
-            }
-
-            .game-area {
-                min-height: 300px;
-            }
+        .score-entry .time {
+            color: #7aa080;
+            font-size: 0.85em;
         }
 
-        .combo-counter {
+        .combo-display {
             position: fixed;
             top: 20px;
             right: 20px;
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            padding: 15px 25px;
-            border-radius: 50px;
-            font-size: 1.2em;
-            font-weight: bold;
-            box-shadow: 0 5px 20px rgba(245, 87, 108, 0.6);
+            background: linear-gradient(135deg, #2a3a4a 0%, #1a2333 100%);
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 700;
+            border: 1px solid #3a5a7a;
             z-index: 1000;
-            animation: comboPopIn 0.5s ease-out;
+            display: none;
+            color: #d4af37;
         }
 
-        @keyframes comboPopIn {
-            from {
-                transform: scale(0.5);
-                opacity: 0;
-            }
-            to {
-                transform: scale(1);
-                opacity: 1;
-            }
+        .combo-display.active {
+            display: block;
+            animation: comboShow 0.3s ease;
+        }
+
+        @keyframes comboShow {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0a0e1a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #3a5a7a;
+            border-radius: 3px;
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 15px; }
+            h1 { font-size: 2em; }
+            .stat-value { font-size: 2.5em; }
+            .game-area { min-height: 350px; }
         }
     </style>
 </head>
@@ -363,62 +305,80 @@
 
         <div class="stats-container">
             <div class="stat-box allah">
-                <h3>Allah</h3>
+                <h3>🔵 Allah</h3>
                 <div class="stat-value" id="allahScore">0</div>
-                <div class="percentage" id="allahPercent">0%</div>
+                <div class="stat-info">
+                    <span>Başarı:</span>
+                    <span class="percentage" id="allahPercent">0%</span>
+                </div>
                 <div class="status-message" id="allahStatus">Hazırlanıyor...</div>
             </div>
 
             <div class="stat-box emir">
-                <h3>Emir</h3>
+                <h3>🔴 Emir</h3>
                 <div class="stat-value" id="emirScore">0</div>
-                <div class="percentage" id="emirPercent">0%</div>
+                <div class="stat-info">
+                    <span>Başarı:</span>
+                    <span class="percentage" id="emirPercent">0%</span>
+                </div>
                 <div class="status-message" id="emirStatus">Hazırlanıyor...</div>
             </div>
         </div>
 
         <div class="game-area">
-            <canvas id="gameCanvas" width="800" height="400"></canvas>
+            <canvas id="gameCanvas" width="900" height="450"></canvas>
         </div>
 
         <div class="controls-container">
             <button onclick="game.clickAllah()">🔵 ALLAH</button>
             <button onclick="game.clickEmir()">🔴 EMİR</button>
             <button onclick="game.bombAttack()">💣 BOMBA</button>
-            <button onclick="game.superPower()">⚡ SÜPER GÜÇ</button>
+            <button onclick="game.superPower()">⚡ GÜÇLENDIR</button>
             <button onclick="game.reset()">🔄 SIFIRLA</button>
             <button onclick="game.toggleSound()">🔊 SES</button>
         </div>
 
         <div class="info-section">
-            <h3>📢 Oyun Mesajı:</h3>
-            <div class="dynamic-text" id="dynamicText">Oyun başlamak için butonlara tıkla!</div>
+            <h3>📊 Durum</h3>
+            <div class="dynamic-text" id="dynamicText">Oyun başlatılıyor...</div>
             
-            <div class="effects-display">
-                <div class="effect-item" id="bombEffect">💣 Bomba Efekti</div>
-                <div class="effect-item" id="lightEffect">⚡ Işık Efekti</div>
-                <div class="effect-item" id="soundEffect">🔊 Ses Efekti</div>
-                <div class="effect-item" id="animEffect">✨ Animasyon</div>
+            <div class="stats-display">
+                <div class="stat-item">
+                    <span>Toplam Hamleler:</span>
+                    <span class="value" id="totalMoves">0</span>
+                </div>
+                <div class="stat-item">
+                    <span>Combo Rekoru:</span>
+                    <span class="value" id="maxCombo">0</span>
+                </div>
+                <div class="stat-item">
+                    <span>Fark (Oran):</span>
+                    <span class="value" id="scoreGap">0</span>
+                </div>
+                <div class="stat-item">
+                    <span>Oyun Durumu:</span>
+                    <span class="value" id="gameStatus">Hazır</span>
+                </div>
             </div>
 
+            <h3 style="margin-top: 18px; color: #a0a8b8;">📜 Hamle Geçmişi</h3>
             <div class="score-history" id="scoreHistory"></div>
         </div>
     </div>
 
-    <div class="combo-counter" id="comboCounter" style="display: none;">
-        🔥 COMBO: <span id="comboCount">0</span>
+    <div class="combo-display" id="comboDisplay">
+        🔥 COMBO x<span id="comboValue">0</span>
     </div>
 
     <script>
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
         
-        // Responsive canvas
         function resizeCanvas() {
             const container = canvas.parentElement;
             const rect = container.getBoundingClientRect();
-            canvas.width = Math.min(rect.width - 40, 800);
-            canvas.height = Math.min(canvas.width * 0.5, 400);
+            canvas.width = Math.min(rect.width - 30, 900);
+            canvas.height = Math.min(canvas.width * 0.5, 450);
         }
         
         window.addEventListener('resize', resizeCanvas);
@@ -428,42 +388,48 @@
             allahScore: 0,
             emirScore: 0,
             combo: 0,
+            maxCombo: 0,
             lastClickTime: 0,
             soundEnabled: true,
             particles: [],
             explosions: [],
             history: [],
+            totalMoves: 0,
 
-            // Dynamik mesajlar
             messages: [
-                "Allah çok güçlü! 💪",
-                "Emir hamlesiyor! 🔥",
-                "Epik savaş! ⚔️",
-                "Bomba patladı! 💥",
-                "Muhteşem hamle! 🌟",
-                "Hızını arttır! 🚀",
-                "Başarılı vurdu! 🎯",
-                "Karşı atağa hazırlan! 🛡️",
-                "İnanılmaz! 🤯",
-                "Devam et! 🔥",
-                "Kimin kazanacağı belli değil! 🤔",
-                "Sağlı sollu saldırıyor! 🌪️",
-                "Süper güç hazırlanıyor! ⚡",
-                "Her iki taraf da güçlü! 💥",
-                "Eğleniyoruz! 🎉"
+                "Allah stratejisini uyguluyor...",
+                "Emir karşı saldırısı başlatıyor...",
+                "Harita dramatik şekilde değişiyor!",
+                "Büyük hamle gerçekleştirildi!",
+                "Zıt dönüş mümkün görünüyor!",
+                "Oyun sonucu belirsiz kalıyor...",
+                "Hızlı bir hamle yapıldı!",
+                "Stratejik zafer yaklaşıyor!",
+                "İnanılmaz bir dönüş!",
+                "Güçler dengeleniyor...",
+                "Fırsat penceresi açıldı!",
+                "Cesur bir hareket!",
+                "Savaşın akışı değişiyor!",
+                "Tahmin edilemeyen bir oyun!",
+                "Nihai hamle zamanı geldi!",
+                "İçişler karışıyor...",
+                "Zaferin sinyalleri veriliyor...",
+                "Stratejik bir hata yapılabilir!",
+                "Dönüş noktası yaklaşıyor!",
+                "Oyunun kaderini belirleyen an!"
             ],
 
-            // Renk paleti (bol çeşit)
             colors: {
-                allah: ['#00d4ff', '#0099ff', '#00ff88', '#00ffff'],
-                emir: ['#ff6b9d', '#ff1744', '#ff6b00', '#ff00ff'],
-                neutral: ['#ffff00', '#00ff88', '#00d4ff', '#ff00ff'],
-                explosions: ['#ffff00', '#ff6b00', '#ff1744', '#ff00ff', '#00ff88']
+                allah: ['#7fa3c0', '#6a8cb5', '#5a7ca0'],
+                emir: ['#c07a7a', '#b56a6a', '#a85a5a'],
+                particles: ['#a0a8b8', '#7aa080', '#d4af37']
             },
 
             updateScores() {
                 document.getElementById('allahScore').textContent = this.allahScore;
                 document.getElementById('emirScore').textContent = this.emirScore;
+                document.getElementById('totalMoves').textContent = this.totalMoves;
+                document.getElementById('maxCombo').textContent = this.maxCombo;
 
                 const total = this.allahScore + this.emirScore;
                 if (total > 0) {
@@ -472,22 +438,28 @@
                     document.getElementById('allahPercent').textContent = allahPercent + '%';
                     document.getElementById('emirPercent').textContent = emirPercent + '%';
                     
-                    // Durum mesajları
-                    if (allahPercent > emirPercent + 10) {
-                        document.getElementById('allahStatus').textContent = '🔵 ÖNDEDEYİZ!';
-                        document.getElementById('emirStatus').textContent = '🔴 Geri düşü...';
-                    } else if (emirPercent > allahPercent + 10) {
-                        document.getElementById('emirStatus').textContent = '🔴 ÖNDEDEYİZ!';
-                        document.getElementById('allahStatus').textContent = '🔵 Geri düşü...';
+                    const gap = Math.abs(this.allahScore - this.emirScore);
+                    document.getElementById('scoreGap').textContent = gap;
+                    
+                    if (allahPercent >= emirPercent + 15) {
+                        document.getElementById('allahStatus').textContent = '✓ Önde!';
+                        document.getElementById('emirStatus').textContent = '✗ Geri';
+                        document.getElementById('gameStatus').textContent = 'Allah Kazanıyor';
+                    } else if (emirPercent >= allahPercent + 15) {
+                        document.getElementById('emirStatus').textContent = '✓ Önde!';
+                        document.getElementById('allahStatus').textContent = '✗ Geri';
+                        document.getElementById('gameStatus').textContent = 'Emir Kazanıyor';
                     } else {
-                        document.getElementById('allahStatus').textContent = '⚖️ Çok yakın!';
-                        document.getElementById('emirStatus').textContent = '⚖️ Çok yakın!';
+                        document.getElementById('allahStatus').textContent = '⚖ Denli';
+                        document.getElementById('emirStatus').textContent = '⚖ Denli';
+                        document.getElementById('gameStatus').textContent = 'Çok Yakın';
                     }
                 }
             },
 
             clickAllah() {
                 this.allahScore += 1;
+                this.totalMoves++;
                 this.addCombo();
                 this.createParticles(canvas.width / 4, canvas.height / 2, this.colors.allah);
                 this.playSound('click1');
@@ -498,6 +470,7 @@
 
             clickEmir() {
                 this.emirScore += 1;
+                this.totalMoves++;
                 this.addCombo();
                 this.createParticles(canvas.width * 3 / 4, canvas.height / 2, this.colors.emir);
                 this.playSound('click2');
@@ -507,190 +480,171 @@
             },
 
             bombAttack() {
-                const damage = Math.floor(Math.random() * 3) + 5; // 5-7 hasar
+                const damage = Math.floor(Math.random() * 5) + 8;
                 if (Math.random() > 0.5) {
                     this.allahScore += damage;
-                    this.recordHistory(`Allah BOMBA! +${damage}`);
+                    this.recordHistory(`💣 Allah Bomba! +${damage}`);
                 } else {
                     this.emirScore += damage;
-                    this.recordHistory(`Emir BOMBA! +${damage}`);
+                    this.recordHistory(`💣 Emir Bomba! +${damage}`);
                 }
+                this.totalMoves++;
                 this.playSound('bomb');
                 this.createExplosion(canvas.width / 2, canvas.height / 2);
                 this.updateScores();
-                this.showEffect('bombEffect');
             },
 
             superPower() {
-                const bonus = Math.floor(Math.random() * 5) + 10; // 10-14 bonus
+                const bonus = Math.floor(Math.random() * 8) + 15;
                 if (Math.random() > 0.5) {
                     this.allahScore += bonus;
-                    this.recordHistory(`Allah SÜPER GÜÇ! +${bonus}`);
+                    this.recordHistory(`⚡ Allah Güçlendir! +${bonus}`);
                 } else {
                     this.emirScore += bonus;
-                    this.recordHistory(`Emir SÜPER GÜÇ! +${bonus}`);
+                    this.recordHistory(`⚡ Emir Güçlendir! +${bonus}`);
                 }
+                this.totalMoves++;
                 this.playSound('power');
                 this.createExplosion(canvas.width / 2, canvas.height / 2);
                 this.updateScores();
-                this.showEffect('lightEffect');
             },
 
             addCombo() {
                 const now = Date.now();
-                if (now - this.lastClickTime < 500) {
+                if (now - this.lastClickTime < 600) {
                     this.combo++;
                 } else {
                     this.combo = 1;
                 }
                 this.lastClickTime = now;
 
+                if (this.combo > this.maxCombo) {
+                    this.maxCombo = this.combo;
+                }
+
                 if (this.combo > 1) {
-                    document.getElementById('comboCounter').style.display = 'block';
-                    document.getElementById('comboCount').textContent = this.combo;
+                    const display = document.getElementById('comboDisplay');
+                    display.classList.add('active');
+                    document.getElementById('comboValue').textContent = this.combo;
                     
                     if (this.combo % 5 === 0) {
                         this.playSound('combo');
                     }
-                } else {
-                    document.getElementById('comboCounter').style.display = 'none';
                 }
             },
 
             createParticles(x, y, colors) {
-                for (let i = 0; i < 15; i++) {
-                    const angle = (Math.PI * 2 * i) / 15;
-                    const speed = 3 + Math.random() * 3;
+                for (let i = 0; i < 12; i++) {
+                    const angle = (Math.PI * 2 * i) / 12;
+                    const speed = 2 + Math.random() * 4;
                     this.particles.push({
-                        x: x,
-                        y: y,
+                        x: x, y: y,
                         vx: Math.cos(angle) * speed,
                         vy: Math.sin(angle) * speed,
                         life: 1,
                         color: colors[Math.floor(Math.random() * colors.length)],
-                        size: 3 + Math.random() * 5
+                        size: 2 + Math.random() * 4
                     });
                 }
             },
 
             createExplosion(x, y) {
-                this.explosions.push({
-                    x: x,
-                    y: y,
-                    radius: 0,
-                    maxRadius: 150,
-                    life: 1,
-                    color: this.colors.explosions
-                });
-
-                for (let i = 0; i < 40; i++) {
-                    const angle = (Math.PI * 2 * Math.random());
-                    const speed = 2 + Math.random() * 4;
+                this.explosions.push({ x, y, radius: 0, maxRadius: 180, life: 1, color: this.colors.particles });
+                for (let i = 0; i < 50; i++) {
+                    const angle = Math.PI * 2 * Math.random();
+                    const speed = 2 + Math.random() * 5;
                     this.particles.push({
-                        x: x,
-                        y: y,
+                        x: x, y: y,
                         vx: Math.cos(angle) * speed,
                         vy: Math.sin(angle) * speed,
                         life: 1,
-                        color: this.colors.explosions[Math.floor(Math.random() * this.colors.explosions.length)],
-                        size: 5 + Math.random() * 10
+                        color: this.colors.particles[Math.floor(Math.random() * this.colors.particles.length)],
+                        size: 3 + Math.random() * 7
                     });
                 }
             },
 
             playSound(type) {
                 if (!this.soundEnabled) return;
-
-                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                
-                if (type === 'click1') {
-                    const osc = audioContext.createOscillator();
-                    const gain = audioContext.createGain();
-                    osc.connect(gain);
-                    gain.connect(audioContext.destination);
-                    osc.frequency.value = 400;
-                    gain.gain.setValueAtTime(0.3, audioContext.currentTime);
-                    gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
-                    osc.start();
-                    osc.stop(audioContext.currentTime + 0.1);
-                } else if (type === 'click2') {
-                    const osc = audioContext.createOscillator();
-                    const gain = audioContext.createGain();
-                    osc.connect(gain);
-                    gain.connect(audioContext.destination);
-                    osc.frequency.value = 300;
-                    gain.gain.setValueAtTime(0.3, audioContext.currentTime);
-                    gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
-                    osc.start();
-                    osc.stop(audioContext.currentTime + 0.1);
-                } else if (type === 'bomb') {
-                    const osc = audioContext.createOscillator();
-                    const gain = audioContext.createGain();
-                    osc.connect(gain);
-                    gain.connect(audioContext.destination);
-                    osc.frequency.setValueAtTime(200, audioContext.currentTime);
-                    osc.frequency.exponentialRampToValueAtTime(50, audioContext.currentTime + 0.3);
-                    gain.gain.setValueAtTime(0.5, audioContext.currentTime);
-                    gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
-                    osc.start();
-                    osc.stop(audioContext.currentTime + 0.3);
-                } else if (type === 'power') {
-                    for (let i = 0; i < 3; i++) {
-                        setTimeout(() => {
-                            const osc = audioContext.createOscillator();
-                            const gain = audioContext.createGain();
-                            osc.connect(gain);
-                            gain.connect(audioContext.destination);
-                            osc.frequency.value = 600 + i * 200;
-                            gain.gain.setValueAtTime(0.2, audioContext.currentTime);
-                            gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.15);
-                            osc.start();
-                            osc.stop(audioContext.currentTime + 0.15);
-                        }, i * 50);
+                try {
+                    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    
+                    if (type === 'click1') {
+                        const osc = audioContext.createOscillator();
+                        const gain = audioContext.createGain();
+                        osc.connect(gain);
+                        gain.connect(audioContext.destination);
+                        osc.frequency.value = 450;
+                        gain.gain.setValueAtTime(0.2, audioContext.currentTime);
+                        gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.08);
+                        osc.start();
+                        osc.stop(audioContext.currentTime + 0.08);
+                    } else if (type === 'click2') {
+                        const osc = audioContext.createOscillator();
+                        const gain = audioContext.createGain();
+                        osc.connect(gain);
+                        gain.connect(audioContext.destination);
+                        osc.frequency.value = 350;
+                        gain.gain.setValueAtTime(0.2, audioContext.currentTime);
+                        gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.08);
+                        osc.start();
+                        osc.stop(audioContext.currentTime + 0.08);
+                    } else if (type === 'bomb') {
+                        const osc = audioContext.createOscillator();
+                        const gain = audioContext.createGain();
+                        osc.connect(gain);
+                        gain.connect(audioContext.destination);
+                        osc.frequency.setValueAtTime(150, audioContext.currentTime);
+                        osc.frequency.exponentialRampToValueAtTime(40, audioContext.currentTime + 0.4);
+                        gain.gain.setValueAtTime(0.4, audioContext.currentTime);
+                        gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.4);
+                        osc.start();
+                        osc.stop(audioContext.currentTime + 0.4);
+                    } else if (type === 'power') {
+                        for (let i = 0; i < 4; i++) {
+                            setTimeout(() => {
+                                const o = audioContext.createOscillator();
+                                const g = audioContext.createGain();
+                                o.connect(g);
+                                g.connect(audioContext.destination);
+                                o.frequency.value = 700 + i * 150;
+                                g.gain.setValueAtTime(0.15, audioContext.currentTime);
+                                g.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.12);
+                                o.start();
+                                o.stop(audioContext.currentTime + 0.12);
+                            }, i * 60);
+                        }
+                    } else if (type === 'combo') {
+                        const o = audioContext.createOscillator();
+                        const g = audioContext.createGain();
+                        o.connect(g);
+                        g.connect(audioContext.destination);
+                        o.frequency.value = 900;
+                        g.gain.setValueAtTime(0.2, audioContext.currentTime);
+                        g.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.15);
+                        o.start();
+                        o.stop(audioContext.currentTime + 0.15);
                     }
-                } else if (type === 'combo') {
-                    const osc = audioContext.createOscillator();
-                    const gain = audioContext.createGain();
-                    osc.connect(gain);
-                    gain.connect(audioContext.destination);
-                    osc.frequency.value = 800;
-                    gain.gain.setValueAtTime(0.2, audioContext.currentTime);
-                    gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
-                    osc.start();
-                    osc.stop(audioContext.currentTime + 0.2);
-                }
+                } catch (e) {}
             },
 
             updateDynamicText() {
-                const randomMessage = this.messages[Math.floor(Math.random() * this.messages.length)];
-                document.getElementById('dynamicText').textContent = randomMessage;
-            },
-
-            showEffect(elementId) {
-                const element = document.getElementById(elementId);
-                element.classList.add('active');
-                setTimeout(() => {
-                    element.classList.remove('active');
-                }, 1000);
+                const msg = this.messages[Math.floor(Math.random() * this.messages.length)];
+                document.getElementById('dynamicText').textContent = msg;
             },
 
             recordHistory(action) {
-                this.history.unshift({
-                    action: action,
-                    time: new Date().toLocaleTimeString('tr-TR')
-                });
-
-                if (this.history.length > 20) {
-                    this.history.pop();
-                }
-
+                const time = new Date();
+                const timeStr = time.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+                this.history.unshift({ action, time: timeStr });
+                if (this.history.length > 25) this.history.pop();
                 this.updateHistoryDisplay();
             },
 
             updateHistoryDisplay() {
-                const historyDiv = document.getElementById('scoreHistory');
-                historyDiv.innerHTML = this.history.map(entry => 
-                    `<div class="score-entry">${entry.action} <span style="color: #00ff88;">[${entry.time}]</span></div>`
+                const div = document.getElementById('scoreHistory');
+                div.innerHTML = this.history.map(e => 
+                    `<div class="score-entry"><span class="action">${e.action}</span><span class="time">${e.time}</span></div>`
                 ).join('');
             },
 
@@ -703,105 +657,106 @@
                 this.allahScore = 0;
                 this.emirScore = 0;
                 this.combo = 0;
+                this.maxCombo = 0;
+                this.totalMoves = 0;
                 this.particles = [];
                 this.explosions = [];
                 this.history = [];
                 this.updateScores();
                 this.updateHistoryDisplay();
-                document.getElementById('dynamicText').textContent = 'Oyun sıfırlandı! Yeniden başla!';
-                this.playSound('power');
+                document.getElementById('dynamicText').textContent = 'Oyun sıfırlandı. Yeni mücadele başlıyor...';
+                document.getElementById('comboDisplay').classList.remove('active');
             },
 
             update() {
-                // Particle update
                 this.particles = this.particles.filter(p => p.life > 0);
                 this.particles.forEach(p => {
                     p.x += p.vx;
                     p.y += p.vy;
-                    p.vy += 0.2; // gravity
-                    p.life -= 0.02;
+                    p.vy += 0.15;
+                    p.life -= 0.018;
                 });
-
-                // Explosion update
                 this.explosions = this.explosions.filter(e => e.life > 0);
                 this.explosions.forEach(e => {
                     e.radius = e.maxRadius * (1 - e.life);
-                    e.life -= 0.02;
+                    e.life -= 0.015;
                 });
             },
 
             draw() {
-                // Clear canvas with gradient
                 const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-                gradient.addColorStop(0, '#0f3460');
-                gradient.addColorStop(0.5, '#1a1a2e');
-                gradient.addColorStop(1, '#0f3460');
+                gradient.addColorStop(0, '#0a0e1a');
+                gradient.addColorStop(0.5, '#0f1419');
+                gradient.addColorStop(1, '#0a0e1a');
                 ctx.fillStyle = gradient;
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-                // Draw center line
-                ctx.strokeStyle = 'rgba(0, 255, 136, 0.2)';
+                // Center line
+                ctx.strokeStyle = 'rgba(122, 160, 128, 0.1)';
                 ctx.lineWidth = 2;
-                ctx.setLineDash([10, 10]);
+                ctx.setLineDash([15, 10]);
                 ctx.beginPath();
                 ctx.moveTo(canvas.width / 2, 0);
                 ctx.lineTo(canvas.width / 2, canvas.height);
                 ctx.stroke();
                 ctx.setLineDash([]);
 
-                // Draw team areas
-                ctx.fillStyle = 'rgba(0, 212, 255, 0.05)';
+                // Team areas
+                ctx.fillStyle = 'rgba(127, 163, 192, 0.03)';
                 ctx.fillRect(0, 0, canvas.width / 2, canvas.height);
-                
-                ctx.fillStyle = 'rgba(255, 107, 157, 0.05)';
+                ctx.fillStyle = 'rgba(192, 122, 122, 0.03)';
                 ctx.fillRect(canvas.width / 2, 0, canvas.width / 2, canvas.height);
 
-                // Draw labels
-                ctx.font = 'bold 24px Arial';
-                ctx.fillStyle = '#00d4ff';
+                // Labels
+                ctx.font = 'bold 28px Arial';
+                ctx.fillStyle = '#7fa3c0';
                 ctx.textAlign = 'center';
-                ctx.fillText('🔵 ALLAH', canvas.width / 4, 50);
+                ctx.fillText('🔵 ALLAH', canvas.width / 4, 45);
+                ctx.fillStyle = '#c07a7a';
+                ctx.fillText('🔴 EMİR', canvas.width * 3 / 4, 45);
 
-                ctx.fillStyle = '#ff6b9d';
-                ctx.fillText('🔴 EMİR', canvas.width * 3 / 4, 50);
+                // Probability display
+                const total = this.allahScore + this.emirScore;
+                if (total > 0) {
+                    const allahProb = Math.round((this.allahScore / total) * 100);
+                    const emirProb = 100 - allahProb;
+                    
+                    ctx.font = 'bold 20px Arial';
+                    ctx.fillStyle = '#d4af37';
+                    ctx.fillText(`${allahProb}% - ${emirProb}%`, canvas.width / 2, canvas.height - 30);
+                    
+                    ctx.font = '14px Arial';
+                    ctx.fillStyle = '#a0a8b8';
+                    ctx.fillText(`Toplam: ${total} | Fark: ${Math.abs(this.allahScore - this.emirScore)}`, canvas.width / 2, canvas.height - 10);
+                }
 
-                // Draw explosions
+                // Explosions
                 this.explosions.forEach(e => {
                     const color = e.color[Math.floor(Math.random() * e.color.length)];
-                    ctx.fillStyle = color.replace(')', `, ${e.life * 0.5})`).replace('rgb', 'rgba');
+                    ctx.fillStyle = color;
+                    ctx.globalAlpha = e.life * 0.4;
                     ctx.beginPath();
                     ctx.arc(e.x, e.y, e.radius, 0, Math.PI * 2);
                     ctx.fill();
-
-                    // Explosion ring
-                    ctx.strokeStyle = color.replace(')', `, ${e.life * 0.8})`).replace('rgb', 'rgba');
-                    ctx.lineWidth = 3;
-                    ctx.stroke();
-                });
-
-                // Draw particles
-                this.particles.forEach(p => {
-                    ctx.fillStyle = p.color.replace(')', `, ${p.life})`).replace('rgb', 'rgba');
-                    if (ctx.fillStyle.includes('rgb(')) {
-                        ctx.fillStyle = p.color;
-                    }
-                    ctx.beginPath();
-                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-                    ctx.fill();
-
-                    // Particle glow
-                    ctx.strokeStyle = p.color;
-                    ctx.lineWidth = 1;
-                    ctx.globalAlpha = p.life * 0.5;
-                    ctx.stroke();
                     ctx.globalAlpha = 1;
                 });
 
-                // Draw score indicators in middle
-                ctx.font = 'bold 20px Arial';
-                ctx.fillStyle = '#ffff00';
+                // Particles
+                this.particles.forEach(p => {
+                    ctx.fillStyle = p.color;
+                    ctx.globalAlpha = p.life * 0.8;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.globalAlpha = 1;
+                });
+
+                // Main score
+                ctx.font = 'bold 48px Arial';
+                ctx.fillStyle = '#d4af37';
                 ctx.textAlign = 'center';
-                ctx.fillText(`${this.allahScore} - ${this.emirScore}`, canvas.width / 2, canvas.height / 2);
+                ctx.globalAlpha = 1;
+                ctx.fillText(`${this.allahScore} ⚔ ${this.emirScore}`, canvas.width / 2, canvas.height / 2 + 20);
             },
 
             gameLoop() {
@@ -811,12 +766,10 @@
             }
         };
 
-        // Start game loop
         game.gameLoop();
         game.updateScores();
         game.updateDynamicText();
 
-        // Keyboard shortcuts
         document.addEventListener('keydown', (e) => {
             if (e.key === '1') game.clickAllah();
             if (e.key === '2') game.clickEmir();
@@ -825,22 +778,14 @@
             if (e.key === '0') game.reset();
         });
 
-        // Mouse click on canvas
         canvas.addEventListener('click', (e) => {
             const rect = canvas.getBoundingClientRect();
             const x = e.clientX - rect.left;
-            
-            if (x < canvas.width / 2) {
-                game.clickAllah();
-            } else {
-                game.clickEmir();
-            }
+            if (x < canvas.width / 2) game.clickAllah();
+            else game.clickEmir();
         });
 
-        // Initial update
-        window.addEventListener('load', () => {
-            resizeCanvas();
-        });
+        window.addEventListener('load', resizeCanvas);
     </script>
 </body>
 </html>
