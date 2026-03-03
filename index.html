@@ -23,7 +23,7 @@
             width: 100%;
             height: 100vh;
             display: grid;
-            grid-template-columns: 300px 1fr 300px;
+            grid-template-columns: 320px 1fr 320px;
             gap: 10px;
             padding: 10px;
         }
@@ -97,17 +97,18 @@
             overflow-y: auto;
             padding: 10px;
             display: flex;
-            flex-direction: column-reverse;
+            flex-direction: column;
+            gap: 5px;
         }
 
         .chat-message {
             padding: 8px 10px;
-            margin: 5px 0;
             border-radius: 6px;
             border-left: 3px solid;
-            font-size: 13px;
+            font-size: 12px;
             word-wrap: break-word;
             animation: slideIn 0.3s ease;
+            line-height: 1.3;
         }
 
         @keyframes slideIn {
@@ -116,9 +117,9 @@
         }
 
         .message-time {
-            font-size: 11px;
-            opacity: 0.8;
-            margin-bottom: 3px;
+            font-size: 10px;
+            opacity: 0.7;
+            margin-bottom: 2px;
         }
 
         .allah-message {
@@ -369,89 +370,73 @@
             emirUnits: [],
             explosions: [],
 
-            komikMesajlar: [
-                // ALLAH POZİTİF
-                "Allah ordusunun morali ÇÖP GIBI!",
-                "Allah: Ben kimim? 💪",
-                "Allah askerleri uçuyor sanki!",
-                "Allah yok etme modu açtı!",
-                "Allah'ın askerleri robot gibi çalışıyor!",
-                "Allah: Bu kadar kolay mı? 😎",
-                "Allah Übermensch modunda!",
-                "Allah harita çizmeye başladı!",
-                "Allah'ın taktiği: SALDIRRRR!",
-                "Allah'ın askerler: 'SİZ KİMSİNİZ?'",
-                "Allah ruh halinde! Harita açılmış!",
-                "Allah 1v50 yapıyor amk!",
-                
-                // EMİR POZİTİF
-                "Emir ord zamanı geldi! ⚔️",
-                "Emir: Bitti mi? 🔥",
-                "Emir askerleri TARİHTE YER ALIYOR!",
-                "Emir: Sanki oyun oynuyorum!",
-                "Emir saldırısı ARMAGEDDÖN!",
-                "Emir istila modu: AKTIF ✓",
-                "Emir askerleri FANTASİ GİBİ!",
-                "Emir: Ben kim? Tanrı mı? 👑",
-                "Emir ordusunun kuvveti SONSUZ!",
-                "Emir: Allah nerede? 👀",
-                "Emir haritayı boşalttı!",
-                "Emir 50v1 yapıyor amk!",
-                
-                // KOMIK NÖTR
-                "Bomba patlama: *BOOOOOM* 💣",
-                "Dağlar yok oldu AMKKK!",
-                "Harita yangın içinde!",
-                "Orman: Lütfen bana merhamet!",
-                "Silahlar: PAMMMM PAM PAM!",
-                "Gökyüzü kızıl oldu!",
-                "Çamurda kan karışıyor!",
-                "Bu savaş TARİH YAZACAK!",
-                "Mayınlar patladı! BÖÖÖÖÖM!",
-                "Tüm harita ses duymayı unuttu!",
-                "Bomba saçması: *fışıkk fışıkk*",
-                "Silahlar ısındı mı? 🔥",
-                "Mermi yağmuru başladı!",
-                "Ateş saçması VAV!",
-                "Dağlar cıvata oyununu oynamıyor!",
-                
-                // ALLAH YOK OLMA
-                "ALLAH NEREDEYSE YOK! 😱",
-                "Allah nefes almakta zorluk çekiyor!",
-                "Allah: İt.. İtfaiye çağırın!",
-                "Allah yorgun gibi görünüyor!",
-                "Allah son darbede!",
-                "Allah savaş meydanından çekiliyor!",
-                "Allah: Bu haksızlık!",
-                "Allah güçü kaybediyor!",
-                "ALLAH YALVARIYOR! 'AMAN!!'",
-                "Allah sesiniz kısılıyor! 📉",
-                "Allah hata mı yaptı? 😱",
-                "ALLAH DÜŞÜyor... DÜŞÜYOR...",
-                "Allah son kurşununu attı!",
-                "Allah düşük tanktan beri!",
-                "Allah: Bitti mi artık? 😭",
-                "Allah teslim olacak mı? 👀",
-                "ALLAH SIFIRA YAKLAŞTI!",
-                
-                // EMİR YOK OLMA
-                "EMİR NEREDEYSE YOK! 😱",
-                "Emir nefes almanın zorlaştı!",
-                "Emir: İmdat! IMAM!",
-                "Emir güçsüzleşiyor!",
-                "Emir son darbede!",
-                "Emir geri çekilmek zorunda!",
-                "Emir: Bu oyun değil!",
-                "Emir'in g��cü tükeniyor!",
-                "EMİR YALVARIYOR! 'DUR!!'",
-                "Emir sesini kaybediyor!",
-                "Emir hata mı buldu?",
-                "EMİR DÜŞÜYOR... DÜŞÜYOR...",
-                "Emir son adımını atıyor!",
-                "Emir kırılgan hale geldi!",
-                "Emir: Bittin mi bu? 😭",
-                "Emir hayatta kalabilir mi?",
-                "EMİR SIFIRA YAKLAŞTI!"
+            allahMesajlar: [
+                "Allah askerleri: SALDIRRRR! 💪",
+                "Allah: Kimse bize karşı koyamaz!",
+                "Allah'ın ordusunun dışkısı bile savaş alanında!",
+                "Allah: Emir nerede? Göremiyorum bile!",
+                "Allah ask: 'Bu kadar kolay mı savaş?'",
+                "Allah: Emir'in askerlerine 'gelmişsin mi sonunda?' 😂",
+                "Allah ordusunun morali gökyüzünde!",
+                "Allah: Dağları eziyorum, Emir'i mi söyleyelim?",
+                "Allah askerleri: 'Bu bir savaş mı, oyun mu?'",
+                "Allah: Emir'in askerleri miyav yapıyor sanki!",
+                "Allah ordusunun biri: 'Hani savaş? Bunu katil çağırmalıyız!'",
+                "Allah: Polis çağırsak Emir için 😂",
+                "Allah'ın strategisi: ÖLDÜR ÖLDÜR ÖLDÜR!",
+                "Allah: Emir'in ordusunun tamamı ölmüş, hala azalmıyor!",
+                "Allah: 'Acı çeksin' dedi, ağlar gibi Emir!",
+                "Allah ordusunun şarkısı: 'Geldik Gördük Yendik!'",
+                "Allah: Emir kaç kere öldü, bir daha say!",
+                "Allah'ın askeri: 'Hoca, bu adalet mi bilmiyorum!'",
+                "Allah: Dağlar patladı, Emir durup ağlıyor!",
+                "Allah: Emir gitme, bitmedi oyun! 🔥",
+            ],
+
+            emirMesajlar: [
+                "Emir: Allah mısın sen? Vay pezevenk! 🔥",
+                "Emir'in ordusu: KAHRETSIN NEREDE GIDERSEK GIDELIM!",
+                "Emir: Allah'ın ordusuna 'uyuyor musunuz?' 😂",
+                "Emir: Dağları ben patlatırım, Allah değil!",
+                "Emir'in askeri: 'Allah'ın askerleri çöpmatik gibi!'",
+                "Emir: 'Savaş mı? Soykırım demek lazım!' 🔥",
+                "Emir ordusunun biri: 'Allahcıları gömdük de gömdük!'",
+                "Emir: Allah'ı unuttur, ben senle uğraşmayacağım!",
+                "Emir: Bomba yağdırıyorum, öl Allah istersen!",
+                "Emir'in şarkısı: 'Allahı kurtaracak kimse yoktur!'",
+                "Emir: Harita kırmızı oldu, kaçan kalmadı!",
+                "Emir ordusunun mozu: 'Düşman kalmadı, eve dönebiliriz!'",
+                "Emir: Allah artık ses çıkarmıyor bile!",
+                "Emir'in askeri: 'Savaş bitti, zafer bizim! HAHAHAHA'",
+                "Emir: Dağlar yanıyor, Allah'ın imamı dua etsin!",
+                "Emir: Şimdi sen öl, ben seninle uğraşmam!",
+                "Emir ordusunun biri: 'Allahcıları silmek istedim, bir de bak!'",
+                "Emir: Allah'ın askerleri kaçıyorlar, söylesin!",
+                "Emir: Bu savaş tarihte kara leke olacak, Allah için!",
+                "Emir: Gittiler mi? Daha var, başka kim var? 🔥",
+            ],
+
+            nötrMesajlar: [
+                "🎙️ Harita tamamen savaş bölgesine döndü!",
+                "💣 BOOOOOM! Dağ patladı! Çamurda kan!",
+                "🔥 Harita ateş saçması gibi parlıyor!",
+                "💀 Bedenleri hava savurması gibi uçuyor!",
+                "⚡ Şiddet dorukta! Dünya sarsılıyor!",
+                "🌪️ Bomba saçması gibi mermi yağıyor!",
+                "🔫 Silahlar PAM PAM PAM diyor kesintisiz!",
+                "💥 Dağlar yok oldu, mayınlar patladı!",
+                "🌍 Şiddetli çarpışmalar devam ediyor!",
+                "⚔️ Korkunç bir dövüş meydanı bu!",
+                "🎯 Vuruşlar etkili, yaralanmalar ağır!",
+                "🚑 Paramediklerin işi var demek!",
+                "🔞 Savaş en kanlı hali gösteriyor!",
+                "💔 İçler acısı manzara!",
+                "🕷️ Kan gölleri oluştu sahalarda!",
+                "🌑 Gece gibi karanlık oldu gündüz!",
+                "👻 Ölüler kalkıp savaşsa daha az olur!",
+                "☠️ Kemik kırma sesleri yankılanıyor!",
+                "🎪 Bu bir savaş değil, kıyım bu!",
+                "📍 Yer işaretleme için cesetler yetmiyor!",
             ],
 
             init() {
@@ -574,26 +559,46 @@
                     e.life -= 0.035;
                 });
 
-                // Random savaş mesajları (çok sık!)
-                if (this.time % 60 === 0) {
-                    const msg = this.komikMesajlar[Math.floor(Math.random() * this.komikMesajlar.length)];
+                // Random savaş mesajları (her iki taraf konuşsun)
+                if (this.time % 45 === 0) {
+                    const allahKonuşma = this.allahMesajlar[Math.floor(Math.random() * this.allahMesajlar.length)];
+                    const emirKonuşma = this.emirMesajlar[Math.floor(Math.random() * this.emirMesajlar.length)];
+                    const nötrKonuşma = this.nötrMesajlar[Math.floor(Math.random() * this.nötrMesajlar.length)];
+
+                    // Kim öndeyse daha çok konuşsun
+                    const random = Math.random();
                     
                     if (this.allahUnits.length > this.emirUnits.length) {
-                        this.addMessage('allah', msg);
+                        if (random < 0.6) {
+                            this.addMessage('allah', allahKonuşma);
+                        } else if (random < 0.85) {
+                            this.addMessage('emir', emirKonuşma);
+                        } else {
+                            this.addMessage('neutral', nötrKonuşma);
+                        }
                     } else if (this.emirUnits.length > this.allahUnits.length) {
-                        this.addMessage('emir', msg);
+                        if (random < 0.6) {
+                            this.addMessage('emir', emirKonuşma);
+                        } else if (random < 0.85) {
+                            this.addMessage('allah', allahKonuşma);
+                        } else {
+                            this.addMessage('neutral', nötrKonuşma);
+                        }
                     } else {
-                        this.addMessage('neutral', msg);
+                        const choice = random < 0.33 ? 'allah' : random < 0.66 ? 'emir' : 'neutral';
+                        if (choice === 'allah') this.addMessage('allah', allahKonuşma);
+                        else if (choice === 'emir') this.addMessage('emir', emirKonuşma);
+                        else this.addMessage('neutral', nötrKonuşma);
                     }
                 }
 
                 // Oyun sonu kontrol
                 if (this.allahUnits.length === 0 && this.emirUnits.length === 0) {
-                    this.endGame("⚖️ BERABERE!\nHER İKİ ORDU DA YOK OLDU! ⚖️");
+                    this.endGame("⚖️ BERABERE!\nHER İKİ ORDU DA YÖK OLDU! ⚖️");
                 } else if (this.allahUnits.length === 0) {
-                    this.endGame("🔴 EMİR KAZANDI!\n\nALLAH YÖK OLDU!\nTARİH YAZILDI! 🔴");
+                    this.endGame("🔴 EMİR KAZANDI!\n\nALLAH ORDUSUNUN\nTÜM ASKERLERİ YALDI! 🔴\n\nTARİH YAZILDI!");
                 } else if (this.emirUnits.length === 0) {
-                    this.endGame("🔵 ALLAH KAZANDI!\n\nEMİR YÖK OLDU!\nTARİH YAZILDI! 🔵");
+                    this.endGame("🔵 ALLAH KAZANDI!\n\nEMİR ORDUSUNUN\nTÜM ASKERLERİ YALDI! 🔵\n\nTARİH YAZILDI!");
                 }
 
                 this.updateStats();
@@ -621,18 +626,36 @@
 
                 if (type === 'allah') {
                     document.getElementById('allahChat').appendChild(msg);
-                    if (document.getElementById('allahChat').children.length > 20) {
+                    if (document.getElementById('allahChat').children.length > 25) {
                         document.getElementById('allahChat').removeChild(
                             document.getElementById('allahChat').firstChild
                         );
                     }
+                    document.getElementById('allahChat').scrollTop = document.getElementById('allahChat').scrollHeight;
                 } else if (type === 'emir') {
                     document.getElementById('emirChat').appendChild(msg);
-                    if (document.getElementById('emirChat').children.length > 20) {
+                    if (document.getElementById('emirChat').children.length > 25) {
                         document.getElementById('emirChat').removeChild(
                             document.getElementById('emirChat').firstChild
                         );
                     }
+                    document.getElementById('emirChat').scrollTop = document.getElementById('emirChat').scrollHeight;
+                } else {
+                    // Nötr mesajlar ikiye bölün
+                    document.getElementById('allahChat').appendChild(msg.cloneNode(true));
+                    if (document.getElementById('allahChat').children.length > 25) {
+                        document.getElementById('allahChat').removeChild(
+                            document.getElementById('allahChat').firstChild
+                        );
+                    }
+                    
+                    document.getElementById('emirChat').appendChild(msg);
+                    if (document.getElementById('emirChat').children.length > 25) {
+                        document.getElementById('emirChat').removeChild(
+                            document.getElementById('emirChat').firstChild
+                        );
+                    }
+                    document.getElementById('emirChat').scrollTop = document.getElementById('emirChat').scrollHeight;
                 }
             },
 
